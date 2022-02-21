@@ -18,8 +18,8 @@
 		4F4B682727C2F74C0029698C /* Netology_IB_InstrumentsUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F4B682627C2F74C0029698C /* Netology_IB_InstrumentsUITestsLaunchTests.swift */; };
 		4F4B683427C2F78C0029698C /* ProfileView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4F4B683327C2F78C0029698C /* ProfileView.xib */; };
 		4F4B683827C2FAC60029698C /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F4B683727C2FAC60029698C /* ProfileView.swift */; };
-		4FA2FFD527C2FDF200B348FC /* photo_2022-02-20 22.41.05.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 4FA2FFD427C2FDF200B348FC /* photo_2022-02-20 22.41.05.jpeg */; };
 		4FA2FFD727C2FE4F00B348FC /* Profile.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4FA2FFD627C2FE4F00B348FC /* Profile.storyboard */; };
+		4FA2FFDD27C311C700B348FC /* photo_2022-02-20 22.41.05.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 4FA2FFDC27C311C700B348FC /* photo_2022-02-20 22.41.05.jpeg */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,8 +55,8 @@
 		4F4B682627C2F74C0029698C /* Netology_IB_InstrumentsUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Netology_IB_InstrumentsUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		4F4B683327C2F78C0029698C /* ProfileView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProfileView.xib; sourceTree = "<group>"; };
 		4F4B683727C2FAC60029698C /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
-		4FA2FFD427C2FDF200B348FC /* photo_2022-02-20 22.41.05.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "photo_2022-02-20 22.41.05.jpeg"; path = "../../../../Downloads/photo_2022-02-20 22.41.05.jpeg"; sourceTree = "<group>"; };
 		4FA2FFD627C2FE4F00B348FC /* Profile.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Profile.storyboard; sourceTree = "<group>"; };
+		4FA2FFDC27C311C700B348FC /* photo_2022-02-20 22.41.05.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "photo_2022-02-20 22.41.05.jpeg"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -115,8 +115,8 @@
 				4F4B680E27C2F74C0029698C /* LaunchScreen.storyboard */,
 				4F4B681127C2F74C0029698C /* Info.plist */,
 				4F4B683327C2F78C0029698C /* ProfileView.xib */,
-				4FA2FFD427C2FDF200B348FC /* photo_2022-02-20 22.41.05.jpeg */,
 				4F4B683727C2FAC60029698C /* ProfileView.swift */,
+				4FA2FFDC27C311C700B348FC /* photo_2022-02-20 22.41.05.jpeg */,
 				4FA2FFD627C2FE4F00B348FC /* Profile.storyboard */,
 			);
 			path = Netology_IB_Instruments;
@@ -246,9 +246,9 @@
 				4FA2FFD727C2FE4F00B348FC /* Profile.storyboard in Resources */,
 				4F4B683427C2F78C0029698C /* ProfileView.xib in Resources */,
 				4F4B681027C2F74C0029698C /* LaunchScreen.storyboard in Resources */,
-				4FA2FFD527C2FDF200B348FC /* photo_2022-02-20 22.41.05.jpeg in Resources */,
 				4F4B680D27C2F74C0029698C /* Assets.xcassets in Resources */,
 				4F4B680B27C2F74B0029698C /* Main.storyboard in Resources */,
+				4FA2FFDD27C311C700B348FC /* photo_2022-02-20 22.41.05.jpeg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
