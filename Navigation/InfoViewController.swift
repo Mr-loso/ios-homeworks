@@ -31,19 +31,15 @@ class InfoViewController: UIViewController {
     @IBAction func Alert(_ sender: Any) {
         let alert = UIAlertController(title: "Пожаловаться на новость", message: "Расскажите, что Вам не понравилось?", preferredStyle: .actionSheet)
                 alert.addAction(UIAlertAction(title: "Разжигание ненависти", style: .default, handler: { (_) in
-                    print("User click Approve button")
                 }))
 
                 alert.addAction(UIAlertAction(title: "Недостоверная информация", style: .default, handler: { (_) in
-                    print("User click Edit button")
                 }))
 
                 alert.addAction(UIAlertAction(title: "Отмена", style: .cancel, handler: { (_) in
-                    print("User click Dismiss button")
                 }))
 
                 self.present(alert, animated: true, completion: {
-                    print("completion block")
                 })
     }
 }
