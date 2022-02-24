@@ -2,7 +2,7 @@
 //  AppDelegate.swift
 //  Netology_IB_Instruments
 //
-//  Created by Арсений Корнилов on 21.02.2022.
+//  Created by Арсений Корнилов on 24.02.2022.
 //
 
 import UIKit

@@ -2,7 +2,7 @@
 //  Netology_IB_InstrumentsTests.swift
 //  Netology_IB_InstrumentsTests
 //
-//  Created by Арсений Корнилов on 21.02.2022.
+//  Created by Арсений Корнилов on 24.02.2022.
 //
 
 import XCTest

@@ -2,20 +2,35 @@
 //  ProfileView.swift
 //  Netology_IB_Instruments
 //
-//  Created by Арсений Корнилов on 21.02.2022.
+//  Created by Арсений Корнилов on 24.02.2022.
 //
 
 import UIKit
 
 class ProfileView: UIView {
 
-    @IBOutlet weak var labelName: UILabel!
-    
-    @IBOutlet weak var labelDate: UILabel!
-    @IBOutlet weak var labelCity: UILabel!
+    @IBOutlet weak var Congrats: UIButton!
 
-    @IBOutlet weak var ImageViewProfilePhoto: UIImageView!
-    
-    @IBOutlet weak var textDescription: UITextView!
-    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        self.setupView()
+    }
+
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        self.setupView()
+    }
+
+    private func setupView() {
+        let view = self.loadViewFromXib()
+        self.addSubview(view)
+        view.frame = self.bounds
+        view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+    }
+
+    private func loadViewFromXib() -> UIView {
+        guard let view = Bundle.main.loadNibNamed("ProfileView", owner: self, options: nil)?.first as? UIView else { return UIView() }
+        
+        return view
+    }
 }
