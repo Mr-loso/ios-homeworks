@@ -40,15 +40,15 @@ class ProfileViewController: UIViewController {
     }
 
     private func setupView() {
-        view.backgroundColor = .lightGray
+        
         self.navigationItem.title = "Профиль"
         
         self.view.addSubview(self.profileHeaderView)
-        
+        self.profileHeaderView.backgroundColor = .systemGray4
         let topConstraint = self.profileHeaderView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor)
         let leadingConstraint = self.profileHeaderView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor)
         let trailingConstraint = self.profileHeaderView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor)
-        self.heightConstraint = self.profileHeaderView.heightAnchor.constraint(equalToConstant: 170)
+        self.heightConstraint = self.profileHeaderView.heightAnchor.constraint(equalToConstant: 186)
         
         NSLayoutConstraint.activate([
             topConstraint, leadingConstraint, trailingConstraint, self.heightConstraint

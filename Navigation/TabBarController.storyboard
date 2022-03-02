@@ -32,7 +32,7 @@
                             </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="vDu-zF-Fre"/>
-                        <color key="backgroundColor" systemColor="systemGreenColor"/>
+                        <color key="backgroundColor" systemColor="systemGray4Color"/>
                         <constraints>
                             <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="7zd-wL-hBp" secondAttribute="trailing" constant="25" id="dFO-oX-lgF"/>
                             <constraint firstItem="vDu-zF-Fre" firstAttribute="bottom" secondItem="7zd-wL-hBp" secondAttribute="bottom" constant="20" id="ks4-sh-blD"/>
@@ -55,8 +55,22 @@
                     <view key="view" contentMode="scaleToFill" id="US8-xS-tx8">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fxV-Rr-tiA">
+                                <rect key="frame" x="0.0" y="88" width="414" height="808"/>
+                                <color key="backgroundColor" systemColor="systemGray4Color"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="808" id="6Gr-BY-QKL"/>
+                                </constraints>
+                            </view>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="oaW-u3-Xyn"/>
-                        <color key="backgroundColor" systemColor="systemIndigoColor"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="fxV-Rr-tiA" firstAttribute="trailing" secondItem="oaW-u3-Xyn" secondAttribute="trailing" id="OBe-2u-pi3"/>
+                            <constraint firstItem="fxV-Rr-tiA" firstAttribute="leading" secondItem="oaW-u3-Xyn" secondAttribute="leading" id="mCY-1x-8Wh"/>
+                            <constraint firstAttribute="bottom" secondItem="fxV-Rr-tiA" secondAttribute="bottom" id="qrx-Nl-ezw"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="eBz-IV-SN4"/>
                 </viewController>
@@ -69,7 +83,7 @@
             <objects>
                 <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="t8j-7p-cfJ" customClass="MainTabBarController" customModule="Navigation" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <tabBar key="tabBar" alpha="0.5" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="IDf-cI-yHQ">
+                    <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="IDf-cI-yHQ">
                         <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -165,20 +179,20 @@
         <!--Item-->
         <scene sceneID="xew-qe-4by">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="QjS-XR-LBv" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="joH-Nu-txx" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Item" image="person.fill" catalog="system" id="Vl5-BF-1Ao"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" opaque="NO" alpha="0.20000000000000001" contentMode="scaleToFill" id="F9w-cY-gMc">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="backgroundColor" systemColor="systemPurpleColor"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
                         <segue destination="Sa1-Gl-Wui" kind="relationship" relationship="rootViewController" id="GLu-6m-hBk"/>
                     </connections>
                 </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="QjS-XR-LBv" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1034.7826086956522" y="562.5"/>
         </scene>
@@ -191,14 +205,8 @@
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
-        <systemColor name="systemGreenColor">
-            <color red="0.20392156862745098" green="0.7803921568627451" blue="0.34901960784313724" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
-        <systemColor name="systemIndigoColor">
-            <color red="0.34509803921568627" green="0.33725490196078434" blue="0.83921568627450982" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
-        <systemColor name="systemPurpleColor">
-            <color red="0.68627450980392157" green="0.32156862745098042" blue="0.87058823529411766" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        <systemColor name="systemGray4Color">
+            <color red="0.81960784313725488" green="0.81960784313725488" blue="0.83921568627450982" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemYellowColor">
             <color red="1" green="0.80000000000000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
