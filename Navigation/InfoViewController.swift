@@ -14,9 +14,6 @@ class InfoViewController: UIViewController {
         self.setupMainButton()
         
     }
-
- 
-    
     
     @IBOutlet weak var AlertButton: UIButton!
     

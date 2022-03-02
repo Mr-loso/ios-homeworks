@@ -48,7 +48,7 @@
             </objects>
             <point key="canvasLocation" x="1944.9275362318842" y="-149.33035714285714"/>
         </scene>
-        <!--Item-->
+        <!--Profile View Controller-->
         <scene sceneID="gcc-Lc-5xp">
             <objects>
                 <viewController id="Sa1-Gl-Wui" customClass="ProfileViewController" customModule="Navigation" customModuleProvider="target" sceneMemberID="viewController">
@@ -58,11 +58,11 @@
                         <viewLayoutGuide key="safeArea" id="oaW-u3-Xyn"/>
                         <color key="backgroundColor" systemColor="systemIndigoColor"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Item" image="person.fill" catalog="system" id="Vl5-BF-1Ao"/>
+                    <navigationItem key="navigationItem" id="eBz-IV-SN4"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hab-3n-gZc" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1035" y="563"/>
+            <point key="canvasLocation" x="1944.9275362318842" y="562.5"/>
         </scene>
         <!--Main Tab Bar Controller-->
         <scene sceneID="o6T-Lp-vCU">
@@ -76,7 +76,7 @@
                     </tabBar>
                     <connections>
                         <segue destination="J3a-bZ-uuH" kind="relationship" relationship="viewControllers" id="YlH-xG-jba"/>
-                        <segue destination="Sa1-Gl-Wui" kind="relationship" relationship="viewControllers" id="mSP-lE-fWW"/>
+                        <segue destination="joH-Nu-txx" kind="relationship" relationship="viewControllers" id="mSP-lE-fWW"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7GP-aC-BuX" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -162,9 +162,29 @@
             </objects>
             <point key="canvasLocation" x="1034.7826086956522" y="-149.33035714285714"/>
         </scene>
+        <!--Item-->
+        <scene sceneID="xew-qe-4by">
+            <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="QjS-XR-LBv" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="joH-Nu-txx" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Item" image="person.fill" catalog="system" id="Vl5-BF-1Ao"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" opaque="NO" alpha="0.20000000000000001" contentMode="scaleToFill" id="F9w-cY-gMc">
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" systemColor="systemPurpleColor"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="Sa1-Gl-Wui" kind="relationship" relationship="rootViewController" id="GLu-6m-hBk"/>
+                    </connections>
+                </navigationController>
+            </objects>
+            <point key="canvasLocation" x="1034.7826086956522" y="562.5"/>
+        </scene>
     </scenes>
     <resources>
-        <image name="icons8-news-feed-60" width="20" height="20"/>
+        <image name="icons8-news-feed-60" width="128" height="128"/>
         <image name="info" catalog="system" width="93" height="128"/>
         <image name="line.3.horizontal" catalog="system" width="128" height="64"/>
         <image name="person.fill" catalog="system" width="128" height="120"/>
@@ -176,6 +196,9 @@
         </systemColor>
         <systemColor name="systemIndigoColor">
             <color red="0.34509803921568627" green="0.33725490196078434" blue="0.83921568627450982" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemPurpleColor">
+            <color red="0.68627450980392157" green="0.32156862745098042" blue="0.87058823529411766" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemYellowColor">
             <color red="1" green="0.80000000000000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

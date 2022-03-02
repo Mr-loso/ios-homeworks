@@ -7,13 +7,11 @@
 
 import UIKit
 
-var pot: String = "Кто я?"
-
 class FeedViewController: UIViewController {
     
     struct post11 {
-        var title: String = "Путин - молодец!"
-        var textOfPost: String = "Владимир Путин молодец! Политик, лидер и борец! Наш президент страну поднял! Россию Путин не предал!"
+        var title: String = "Дожить бы до завтра"
+        var textOfPost: String = "На улице дубак, на сердце тлен и мрак, В интернете, как всегда, кто-то не прав, но мне плевать, На улице дубак, скорее бы весна, Что мне ваши катастрофы и теракты, мне б не знать о них..."
     }
 
     @IBOutlet weak var showNewsButton: UIButton!
@@ -26,7 +24,7 @@ class FeedViewController: UIViewController {
     
     private func setupNavigationBar() {
         self.navigationController?.navigationBar.prefersLargeTitles = true
-        self.navigationItem.title = "Заголовок"
+        self.navigationItem.title = "Лента"
         self.navigationItem.backButtonTitle = "Назад"
     }
     

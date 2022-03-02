@@ -7,29 +7,53 @@
 
 import UIKit
 
+extension ProfileViewController: ProfileHeaderViewProtocol {
+    
+    func didTapStatusButton(textFieldIsVisible: Bool, completion: @escaping () -> Void) {
+        self.heightConstraint?.constant = textFieldIsVisible ? 214 : 170
+        
+        UIView.animate(withDuration: 0.3, delay: 0.0) {
+            self.view.layoutIfNeeded()
+        } completion: { _ in
+            completion()
+        }
+    }
+}
+
+
 class ProfileViewController: UIViewController {
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        view.backgroundColor = .lightGray
-        self.view.addSubview(self.profilePhoto)
-        self.activateConstraints()
-        
-    }
+    private var heightConstraint: NSLayoutConstraint?
     
-    private lazy var profilePhoto: UIImageView = {
-        let profilePhoto = UIImageView()
-        profilePhoto.translatesAutoresizingMaskIntoConstraints = false
-        profilePhoto.image = UIImage(named: "Prof")
-        return profilePhoto
+    private lazy var profileHeaderView: ProfileHeaderView = {
+        let view = ProfileHeaderView(frame: .zero)
+        view.delegate = self
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
     }()
     
-    private func activateConstraints() {
-        self.profilePhoto.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor).isActive = true
-        self.profilePhoto.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 20).isActive = true
-        self.profilePhoto.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -20).isActive = true
-        self.profilePhoto.heightAnchor.constraint(equalToConstant: 200).isActive = true
+    override func viewDidLoad() {
+        
+        super.viewDidLoad()
+        self.setupView()
         
     }
 
+    private func setupView() {
+        view.backgroundColor = .lightGray
+        self.navigationItem.title = "Профиль"
+        
+        self.view.addSubview(self.profileHeaderView)
+        
+        let topConstraint = self.profileHeaderView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor)
+        let leadingConstraint = self.profileHeaderView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor)
+        let trailingConstraint = self.profileHeaderView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor)
+        self.heightConstraint = self.profileHeaderView.heightAnchor.constraint(equalToConstant: 170)
+        
+        NSLayoutConstraint.activate([
+            topConstraint, leadingConstraint, trailingConstraint, self.heightConstraint
+        ].compactMap({ $0 }))
+    }
+    
 }
+
