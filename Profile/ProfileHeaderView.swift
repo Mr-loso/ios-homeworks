@@ -42,6 +42,7 @@ class ProfileHeaderView: UIView {
         button.layer.cornerRadius = 12
         button.clipsToBounds = true
         button.setTitle("Show status", for: .normal)
+       
         return button
     }()
     
@@ -50,6 +51,7 @@ class ProfileHeaderView: UIView {
         textField.isHidden = true
         textField.placeholder = "Set status"
         textField.translatesAutoresizingMaskIntoConstraints = false
+        textField.text = nil
         return textField
     }()
     
@@ -111,9 +113,18 @@ class ProfileHeaderView: UIView {
         let heightButtonConstraint = self.statusButton.heightAnchor.constraint(equalToConstant: 50)
         
         
+        let topConstraintTextField = self.textField.topAnchor.constraint(equalTo: self.infoStackView.bottomAnchor, constant: 10)
+        let leadingConstraintTextField = self.textField.leadingAnchor.constraint(equalTo: self.statusLabel.leadingAnchor)
+        let trailingConstraintTextField = self.textField.trailingAnchor.constraint(equalTo: self.infoStackView.trailingAnchor)
+        let heightTextFieldConstraintTextField = self.textField.heightAnchor.constraint(equalToConstant: 18)
+        
+        
         
         NSLayoutConstraint.activate([
-            topConstraint, leadingConstraint, trailingConstraint, imageViewAspectRatio, self.buttonTopConstraint, leadingButtonConstraint, trailingButtonConstraint, bottomButtonConstraint, heightButtonConstraint
+            topConstraint, leadingConstraint, trailingConstraint, imageViewAspectRatio, self.buttonTopConstraint, leadingButtonConstraint, trailingButtonConstraint, bottomButtonConstraint, heightButtonConstraint, topConstraintTextField,
+            leadingConstraintTextField,
+            trailingConstraintTextField,
+            heightTextFieldConstraintTextField,
         ].compactMap({ $0 }))
         
     }
@@ -129,29 +140,22 @@ class ProfileHeaderView: UIView {
         if self.textField.isHidden {
             self.addSubview(self.textField)
             
-            self.buttonTopConstraint?.isActive = false // Необходимо деактивировать констрейнт, иначе будет конфликт констрейнтов, и Auto Layout не сможет однозначно определить фреймы textField'а.
-            
-            let topConstraint = self.textField.topAnchor.constraint(equalTo: self.infoStackView.bottomAnchor, constant: 10)
-            let leadingConstraint = self.textField.leadingAnchor.constraint(equalTo: self.statusLabel.leadingAnchor)
-            let trailingConstraint = self.textField.trailingAnchor.constraint(equalTo: self.infoStackView.trailingAnchor)
-            let heightTextFieldConstraint = self.textField.heightAnchor.constraint(equalToConstant: 18) // Не указав высоту textField'а, получается неоднозначность/неопределенность констрейнтов. Auto Layout на основе этой неопределенности имеет множество решений (height для stackView, textField), выбирая оптимальное, а не необходимое, то есть вместо 34pts для textField'а растягивается stackView.
+            self.buttonTopConstraint?.isActive = false
             self.buttonTopConstraint = self.statusButton.topAnchor.constraint(equalTo: self.textField.bottomAnchor, constant: 20)
             self.statusButton.setTitle("Confirm status", for: .normal)
             NSLayoutConstraint.activate([
-                topConstraint,
-                leadingConstraint,
-                trailingConstraint,
-                heightTextFieldConstraint,
+                
                 self.buttonTopConstraint
             ].compactMap({ $0 }))
         } else {
             self.buttonTopConstraint?.isActive = false
-            self.buttonTopConstraint = self.statusButton.topAnchor.constraint(equalTo: self.infoStackView.bottomAnchor, constant: 4)
+            self.buttonTopConstraint = self.statusButton.topAnchor.constraint(equalTo: self.infoStackView.bottomAnchor, constant: 16)
             self.statusButton.setTitle("Set status", for: .normal)
-            if textField.text != nil{
-            self.statusLabel.text = self.textField.text
+            if textField.text != nil {
+                self.statusLabel.text = self.textField.text
             }
             self.textField.text = nil
+            
             
             
             NSLayoutConstraint.activate([

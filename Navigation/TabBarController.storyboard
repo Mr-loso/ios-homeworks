@@ -59,17 +59,15 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fxV-Rr-tiA">
                                 <rect key="frame" x="0.0" y="88" width="414" height="808"/>
                                 <color key="backgroundColor" systemColor="systemGray4Color"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="808" id="6Gr-BY-QKL"/>
-                                </constraints>
                             </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="oaW-u3-Xyn"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="fxV-Rr-tiA" firstAttribute="trailing" secondItem="oaW-u3-Xyn" secondAttribute="trailing" id="OBe-2u-pi3"/>
+                            <constraint firstItem="fxV-Rr-tiA" firstAttribute="top" secondItem="oaW-u3-Xyn" secondAttribute="top" id="ZsZ-ci-Vgu"/>
+                            <constraint firstAttribute="bottom" secondItem="fxV-Rr-tiA" secondAttribute="bottom" id="g7E-yr-Zdm"/>
                             <constraint firstItem="fxV-Rr-tiA" firstAttribute="leading" secondItem="oaW-u3-Xyn" secondAttribute="leading" id="mCY-1x-8Wh"/>
-                            <constraint firstAttribute="bottom" secondItem="fxV-Rr-tiA" secondAttribute="bottom" id="qrx-Nl-ezw"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="eBz-IV-SN4"/>

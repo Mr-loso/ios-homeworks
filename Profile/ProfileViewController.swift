@@ -10,7 +10,7 @@ import UIKit
 extension ProfileViewController: ProfileHeaderViewProtocol {
     
     func didTapStatusButton(textFieldIsVisible: Bool, completion: @escaping () -> Void) {
-        self.heightConstraint?.constant = textFieldIsVisible ? 214 : 170
+        self.heightConstraint?.constant = textFieldIsVisible ? 214 : 182
         
         UIView.animate(withDuration: 0.3, delay: 0.0) {
             self.view.layoutIfNeeded()
@@ -33,15 +33,13 @@ class ProfileViewController: UIViewController {
     }()
     
     override func viewDidLoad() {
-        
         super.viewDidLoad()
         self.setupView()
-        
     }
 
     private func setupView() {
         
-        self.navigationItem.title = "Профиль"
+        self.navigationItem.title = "Profile"
         
         self.view.addSubview(self.profileHeaderView)
         self.profileHeaderView.backgroundColor = .systemGray4
