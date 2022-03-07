@@ -18,7 +18,7 @@ class ProfileHeaderView: UIView {
         let imageView = UIImageView()
         imageView.backgroundColor = .systemRed
         imageView.image = UIImage(named: "Prof")
-        imageView.layer.cornerRadius = 50
+        imageView.layer.cornerRadius = 53
         imageView.layer.borderColor = UIColor.white.cgColor
         imageView.layer.borderWidth = 3;
         imageView.clipsToBounds = true

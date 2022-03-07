@@ -10,7 +10,7 @@ import UIKit
 extension ProfileViewController: ProfileHeaderViewProtocol {
     
     func didTapStatusButton(textFieldIsVisible: Bool, completion: @escaping () -> Void) {
-        self.heightConstraint?.constant = textFieldIsVisible ? 214 : 182
+        self.heightConstraint?.constant = textFieldIsVisible ? 220 : 188
         
         UIView.animate(withDuration: 0.3, delay: 0.0) {
             self.view.layoutIfNeeded()
@@ -46,7 +46,7 @@ class ProfileViewController: UIViewController {
         let topConstraint = self.profileHeaderView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor)
         let leadingConstraint = self.profileHeaderView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor)
         let trailingConstraint = self.profileHeaderView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor)
-        self.heightConstraint = self.profileHeaderView.heightAnchor.constraint(equalToConstant: 186)
+        self.heightConstraint = self.profileHeaderView.heightAnchor.constraint(equalToConstant: 192)
         
         NSLayoutConstraint.activate([
             topConstraint, leadingConstraint, trailingConstraint, self.heightConstraint
