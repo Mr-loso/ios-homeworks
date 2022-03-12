@@ -12,9 +12,8 @@ protocol ProfileHeaderViewProtocol: AnyObject {
 }
 
 class ProfileHeaderView: UIView {
-
     
-    var imageView: UIImageView = {
+    let imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.backgroundColor = .systemRed
         imageView.image = UIImage(named: "Prof")
@@ -113,7 +112,7 @@ class ProfileHeaderView: UIView {
         let heightButtonConstraint = self.statusButton.heightAnchor.constraint(equalToConstant: 50)
         
         
-        let topConstraintTextField = self.textField.topAnchor.constraint(equalTo: self.infoStackView.bottomAnchor, constant: 10)
+        let topConstraintTextField = self.textField.topAnchor.constraint(equalTo: self.infoStackView.bottomAnchor, constant: 20)
         let leadingConstraintTextField = self.textField.leadingAnchor.constraint(equalTo: self.statusLabel.leadingAnchor)
         let trailingConstraintTextField = self.textField.trailingAnchor.constraint(equalTo: self.infoStackView.trailingAnchor)
         let heightTextFieldConstraintTextField = self.textField.heightAnchor.constraint(equalToConstant: 18)
@@ -121,7 +120,16 @@ class ProfileHeaderView: UIView {
         
         
         NSLayoutConstraint.activate([
-            topConstraint, leadingConstraint, trailingConstraint, imageViewAspectRatio, self.buttonTopConstraint, leadingButtonConstraint, trailingButtonConstraint, bottomButtonConstraint, heightButtonConstraint, topConstraintTextField,
+            topConstraint,
+            leadingConstraint,
+            trailingConstraint,
+            imageViewAspectRatio,
+            self.buttonTopConstraint,
+            leadingButtonConstraint,
+            trailingButtonConstraint,
+            bottomButtonConstraint,
+            heightButtonConstraint,
+            topConstraintTextField,
             leadingConstraintTextField,
             trailingConstraintTextField,
             heightTextFieldConstraintTextField,
@@ -134,6 +142,9 @@ class ProfileHeaderView: UIView {
         self.imageView.bottomAnchor.constraint(equalTo: self.imageView.bottomAnchor).isActive = true
         self.imageView.topAnchor.constraint(equalTo: self.imageView.topAnchor).isActive = true
     }
+    
+    
+    
     @objc private func didTapStatusButton() {
         print("статус")
         
@@ -168,5 +179,3 @@ class ProfileHeaderView: UIView {
         }
     }
 }
-
-
