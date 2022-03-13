@@ -13,7 +13,7 @@ protocol ProfileHeaderViewProtocol: AnyObject {
 
 class ProfileHeaderView: UIView {
     
-    let imageView: UIImageView = {
+    private lazy var imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.backgroundColor = .systemRed
         imageView.image = UIImage(named: "Prof")
@@ -40,7 +40,7 @@ class ProfileHeaderView: UIView {
         button.translatesAutoresizingMaskIntoConstraints = false
         button.layer.cornerRadius = 12
         button.clipsToBounds = true
-        button.setTitle("Show status", for: .normal)
+        button.setTitle("Set status", for: .normal)
        
         return button
     }()
@@ -137,11 +137,11 @@ class ProfileHeaderView: UIView {
         
     }
     
-    func setConstraints() {
-        
-        self.imageView.bottomAnchor.constraint(equalTo: self.imageView.bottomAnchor).isActive = true
-        self.imageView.topAnchor.constraint(equalTo: self.imageView.topAnchor).isActive = true
-    }
+//    //func setConstraints() {
+//        
+//        self.imageView.bottomAnchor.constraint(equalTo: self.imageView.bottomAnchor).isActive = true
+//        self.imageView.topAnchor.constraint(equalTo: self.imageView.topAnchor).isActive = true
+//    }
     
     
     
