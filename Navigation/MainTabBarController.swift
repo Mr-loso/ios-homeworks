@@ -17,9 +17,9 @@ class MainTabBarController: UITabBarController {
         var title: String {
             switch self {
             case .first:
-                return "Лента"
+                return "Feed"
             case .second:
-                return "Профиль"
+                return "Profile"
             case .none:
                 return ""
             }

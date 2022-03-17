@@ -85,7 +85,7 @@ class LoginViewController: UIViewController {
 
     private lazy var logInButton: UIButton = {
         let button = UIButton()
-        button.backgroundColor = UIColor (named: "LoginButtonColor")
+        button.backgroundColor = UIColor(named: "LoginButtonColor")
         button.addTarget(self, action: #selector(self.didTapStatusButton), for: .touchUpInside)
         button.setTitle("Log In", for: .normal)
         button.layer.cornerRadius = 10

@@ -137,12 +137,6 @@ class ProfileHeaderView: UIView {
         
     }
     
-//    //func setConstraints() {
-//        
-//        self.imageView.bottomAnchor.constraint(equalTo: self.imageView.bottomAnchor).isActive = true
-//        self.imageView.topAnchor.constraint(equalTo: self.imageView.topAnchor).isActive = true
-//    }
-    
     
     
     @objc private func didTapStatusButton() {
