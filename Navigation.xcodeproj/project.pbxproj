@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		4F07F15C27C5B0C600BFB830 /* PostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F07F15B27C5B0C600BFB830 /* PostViewController.swift */; };
+		4F228E0327E526EA002646FA /* HeaderViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F228E0227E526EA002646FA /* HeaderViewCell.swift */; };
 		4F8C8F9927C6E80000BFA134 /* InfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F8C8F9827C6E80000BFA134 /* InfoViewController.swift */; };
 		4F97B20827DD1565009A8515 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F97B20727DD1565009A8515 /* LoginViewController.swift */; };
 		4F99422727C583A000C5F395 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F99422627C583A000C5F395 /* AppDelegate.swift */; };
@@ -46,6 +47,7 @@
 
 /* Begin PBXFileReference section */
 		4F07F15B27C5B0C600BFB830 /* PostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostViewController.swift; sourceTree = "<group>"; };
+		4F228E0227E526EA002646FA /* HeaderViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderViewCell.swift; sourceTree = "<group>"; };
 		4F8C8F9827C6E80000BFA134 /* InfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoViewController.swift; sourceTree = "<group>"; };
 		4F97B20727DD1565009A8515 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		4F99422327C583A000C5F395 /* Navigation.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Navigation.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -158,6 +160,7 @@
 				4F97B20727DD1565009A8515 /* LoginViewController.swift */,
 				4FAD453827CC0EFD005D62C4 /* ProfileViewController.swift */,
 				4FAE47DD27E27E1C00452881 /* DynamicArticleTableViewCell.swift */,
+				4F228E0227E526EA002646FA /* HeaderViewCell.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -297,6 +300,7 @@
 				4F07F15C27C5B0C600BFB830 /* PostViewController.swift in Sources */,
 				4F99422B27C583A000C5F395 /* MainTabBarController.swift in Sources */,
 				4F97B20827DD1565009A8515 /* LoginViewController.swift in Sources */,
+				4F228E0327E526EA002646FA /* HeaderViewCell.swift in Sources */,
 				4F99422727C583A000C5F395 /* AppDelegate.swift in Sources */,
 				4F8C8F9927C6E80000BFA134 /* InfoViewController.swift in Sources */,
 				4F99422927C583A000C5F395 /* SceneDelegate.swift in Sources */,

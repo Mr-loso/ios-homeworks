@@ -151,8 +151,3 @@ extension DynamicArticleTableViewCell: Setupable {
     }
 }
 
-protocol ViewModelProtocol {}
-
-protocol Setupable {
-    func setup(with viewModel: ViewModelProtocol)
-}

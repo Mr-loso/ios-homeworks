@@ -29,7 +29,9 @@ class ProfileViewController: UIViewController {
         tableView.dataSource = self
         tableView.delegate = self
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "DefaultCell")
+        tableView.register(HeaderTableViewCell.self, forCellReuseIdentifier: "HeaderCell")
         tableView.register(DynamicArticleTableViewCell.self, forCellReuseIdentifier: "ArticleCell")
+        
         tableView.translatesAutoresizingMaskIntoConstraints = false
         return tableView
     }()
@@ -39,13 +41,6 @@ class ProfileViewController: UIViewController {
     }()
     
     private var dataSource: [News.Article] = []
-
-    private lazy var profileHeaderView: ProfileHeaderView = {
-        let view = ProfileHeaderView(frame: .zero)
-        view.delegate = self
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
 
     
     private func setupNavigationBar() {
@@ -63,26 +58,18 @@ class ProfileViewController: UIViewController {
         
         
         self.view.addSubview(self.tableView)
-        self.view.addSubview(self.profileHeaderView)
         
-        let topTableConstraint = self.tableView.topAnchor.constraint(equalTo: self.profileHeaderView.bottomAnchor)
+        
+        let topTableConstraint = self.tableView.topAnchor.constraint(equalTo: self.view.topAnchor)
         let leadingTableConstraint = self.tableView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor)
         let trailingTableConstraint = self.tableView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor)
         let bottomTableConstraint = self.tableView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor)
         
-        self.profileHeaderView.backgroundColor = .systemGray6
-        let topConstraint = self.profileHeaderView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor)
-        let leadingConstraint = self.profileHeaderView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor)
-        let trailingConstraint = self.profileHeaderView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor)
-        self.heightConstraint = self.profileHeaderView.heightAnchor.constraint(equalToConstant: 192)
+
         
         NSLayoutConstraint.activate([
-            topConstraint
-            , leadingConstraint
-            , trailingConstraint
-            , self.heightConstraint
             
-            , topTableConstraint
+             topTableConstraint
             , leadingTableConstraint
             , trailingTableConstraint
             , bottomTableConstraint
@@ -93,7 +80,7 @@ class ProfileViewController: UIViewController {
         if let path = Bundle.main.path(forResource: "news", ofType: "json") {
             do {
                 let data = try Data(contentsOf: URL(fileURLWithPath: path), options: .alwaysMapped)
-//                let jsonObj = try JSONSerialization.jsonObject(with: data, options: .allowFragments)
+
                 let news = try self.jsonDecoder.decode(News.self, from: data)
                 print("json data: \(news)")
                 completion(news.articles)
@@ -107,18 +94,6 @@ class ProfileViewController: UIViewController {
     
 }
 
-extension ProfileViewController: ProfileHeaderViewProtocol {
-    
-    func didTapStatusButton(textFieldIsVisible: Bool, completion: @escaping () -> Void) {
-        self.heightConstraint?.constant = textFieldIsVisible ? 230 : 188
-        
-        UIView.animate(withDuration: 0.25, delay: 0.0) {
-            self.view.layoutIfNeeded()
-        } completion: { _ in
-            completion()
-        }
-    }
-}
 extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -126,20 +101,27 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "ArticleCell", for: indexPath) as? DynamicArticleTableViewCell else {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "DefaultCell", for: indexPath)
+        
+        
+        switch indexPath.row {
+        case 0 :
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: "HeaderCell", for: indexPath) as? HeaderTableViewCell else {
+                
+                let cell = tableView.dequeueReusableCell(withIdentifier: "DefaultCell", for: indexPath)
+                return cell
+            }
+            let viewModel = HeaderTableViewCell.ViewModel(view: ProfileHeaderView())
+            cell.setup(with: viewModel)
+            return cell
+        default :
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: "ArticleCell", for: indexPath) as? DynamicArticleTableViewCell else {
+                let cell = tableView.dequeueReusableCell(withIdentifier: "DefaultCell", for: indexPath)
+                return cell
+            }
+            let article = self.dataSource[indexPath.row]
+            let viewModel = DynamicArticleTableViewCell.ViewModel(title: article.title, description: article.description, publishedAt: article.publishedAtString, likes: article.likes, views: article.views, newsImage: UIImage(named: article.pic))
+            cell.setup(with: viewModel)
             return cell
         }
-        
-        let article = self.dataSource[indexPath.row]
-        let viewModel = DynamicArticleTableViewCell.ViewModel(title: article.title,
-                                                              description: article.description,
-                                                              publishedAt: article.publishedAtString,
-                                                              likes: article.likes,
-                                                              views: article.views,
-                                                              newsImage: UIImage(named: article.pic)
-        )
-        cell.setup(with: viewModel)
-        return cell
     }
 }
