@@ -6,7 +6,7 @@
             "publishedAt": "2022-03-14T18:00:00Z",
             "likes": "50",
             "views": "120",
-            "pic": "0"
+            "pic": "News0"
         },
         {
             "author": "ИА 'Панорама'",
@@ -15,7 +15,7 @@
             "publishedAt": "2022-03-12T21:00:00Z",
             "likes": "50",
             "views": "120",
-            "pic": "1"
+            "pic": "News1"
         },
         {
             "author": "ИА 'Панорама'",
@@ -24,7 +24,7 @@
             "publishedAt": "2022-03-14T18:30:00Z",
             "likes": "64",
             "views": "189",
-            "pic": "2"
+            "pic": "News2"
         },
         {
             "author": "ИА 'Панорама'",
@@ -33,7 +33,7 @@
             "publishedAt": "2022-03-12T21:00:00Z",
             "likes": "50",
             "views": "120",
-            "pic": "3"
+            "pic": "News3"
         },
     ]
 }

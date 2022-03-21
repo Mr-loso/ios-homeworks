@@ -30,6 +30,7 @@ class ProfileViewController: UIViewController {
         tableView.delegate = self
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "DefaultCell")
         tableView.register(HeaderTableViewCell.self, forCellReuseIdentifier: "HeaderCell")
+        tableView.register(PhotoTableViewCell.self, forCellReuseIdentifier: "PhotoCell")
         tableView.register(DynamicArticleTableViewCell.self, forCellReuseIdentifier: "ArticleCell")
         
         tableView.translatesAutoresizingMaskIntoConstraints = false
@@ -113,6 +114,19 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
             let viewModel = HeaderTableViewCell.ViewModel(view: ProfileHeaderView())
             cell.setup(with: viewModel)
             return cell
+        
+        
+        case 1:
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: "PhotoCell", for: indexPath) as? PhotoTableViewCell else {
+                
+                let cell = tableView.dequeueReusableCell(withIdentifier: "DefaultCell", for: indexPath)
+                return cell
+            }
+            let viewModel = PhotoTableViewCell.ViewModel(numberOfPictures: 4, picture: UIImage(named: "News1"))
+            cell.setup(with: viewModel)
+            return cell
+        
+        
         default :
             guard let cell = tableView.dequeueReusableCell(withIdentifier: "ArticleCell", for: indexPath) as? DynamicArticleTableViewCell else {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "DefaultCell", for: indexPath)
