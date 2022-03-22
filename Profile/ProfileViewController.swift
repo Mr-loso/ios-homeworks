@@ -11,12 +11,14 @@ class ProfileViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.hideKeyboard()
         self.setupView()
-        setupNavigationBar()
+        self.setupNavigationBar()
         self.fetchArticles { [weak self] articles in
             self?.dataSource = articles
             self?.tableView.reloadData()
         }
+        
     }
     
     private var heightConstraint: NSLayoutConstraint?
@@ -29,6 +31,7 @@ class ProfileViewController: UIViewController {
         tableView.dataSource = self
         tableView.delegate = self
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "DefaultCell")
+        tableView.register(ToAllPhotosTableViewCell.self, forCellReuseIdentifier: "ToPhotosActionCell")
         tableView.register(HeaderTableViewCell.self, forCellReuseIdentifier: "HeaderCell")
         tableView.register(PhotoTableViewCell.self, forCellReuseIdentifier: "PhotoCell")
         tableView.register(DynamicArticleTableViewCell.self, forCellReuseIdentifier: "ArticleCell")
@@ -69,7 +72,6 @@ class ProfileViewController: UIViewController {
 
         
         NSLayoutConstraint.activate([
-            
              topTableConstraint
             , leadingTableConstraint
             , trailingTableConstraint
@@ -98,7 +100,7 @@ class ProfileViewController: UIViewController {
 extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.dataSource.count
+        return (self.dataSource.count+3)
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -116,7 +118,21 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
             return cell
         
         
+       
+        
         case 1:
+            
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: "ToPhotosActionCell", for: indexPath) as? ToAllPhotosTableViewCell else {
+                            
+                            let cell = tableView.dequeueReusableCell(withIdentifier: "DefaultCell", for: indexPath)
+                            return cell
+                        }
+                        let viewModel = ToAllPhotosTableViewCell.ViewModel(numberOfPictures: 4)
+                        cell.setup(with: viewModel)
+                        return cell
+            
+            
+        case 2:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: "PhotoCell", for: indexPath) as? PhotoTableViewCell else {
                 
                 let cell = tableView.dequeueReusableCell(withIdentifier: "DefaultCell", for: indexPath)
@@ -126,16 +142,39 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
             cell.setup(with: viewModel)
             return cell
         
-        
         default :
             guard let cell = tableView.dequeueReusableCell(withIdentifier: "ArticleCell", for: indexPath) as? DynamicArticleTableViewCell else {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "DefaultCell", for: indexPath)
                 return cell
             }
-            let article = self.dataSource[indexPath.row]
+            let article = self.dataSource[indexPath.row-3]
             let viewModel = DynamicArticleTableViewCell.ViewModel(title: article.title, description: article.description, publishedAt: article.publishedAtString, likes: article.likes, views: article.views, newsImage: UIImage(named: article.pic))
             cell.setup(with: viewModel)
             return cell
         }
     }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if indexPath.row == 1{
+        self.navigationController?.pushViewController(PhotosViewController(), animated: true)
+        }
+    }
+}
+
+
+
+extension ProfileViewController {
+    func hideKeyboard() {
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer (target: self, action: #selector(dismissKeyboard))
+        
+        tap.cancelsTouchesInView = false
+        view.addGestureRecognizer(tap)
+    }
+    
+    @objc func dismissKeyboard() {
+        self.view.endEditing(true)
+        
+    }
+    
+    
 }

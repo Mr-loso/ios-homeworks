@@ -10,7 +10,9 @@ import UIKit
 class LoginViewController: UIViewController {
     
     override func viewDidLoad() {
+        
         super.viewDidLoad()
+        self.hideKeyboard()
         self.setupView()
         self.setupConstraints()
         view.backgroundColor = .white
@@ -107,12 +109,14 @@ class LoginViewController: UIViewController {
         let contentViewBottomConstraint = self.contentView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor)
         let contentViewWidthConstraint = self.contentView.widthAnchor.constraint(equalTo: self.view.widthAnchor)
         
-        let topLogoConstraint = self.mainLogoImage.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 120)
+        let topLogoConstraint = self.mainLogoImage.bottomAnchor.constraint(equalTo: self.loginPasswordStackView.topAnchor, constant: -60)
         let heghtLogoConstraint = self.mainLogoImage.heightAnchor.constraint(equalToConstant: 100)
         let xPosLogoConstraint = self.mainLogoImage.centerXAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: self.view.center.x)
+        
         let logoAspectRatio = self.mainLogoImage.heightAnchor.constraint(equalTo: self.mainLogoImage.widthAnchor, multiplier: 1.0)
         
-        let stackViewTopConstraint = self.loginPasswordStackView.topAnchor.constraint(equalTo: self.mainLogoImage.bottomAnchor, constant: 120)
+    
+        let stackViewCenterY = self.loginPasswordStackView.centerYAnchor.constraint(equalTo: self.contentView.centerYAnchor)
         let stackViewTrailingConstraint = self.loginPasswordStackView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: -16)
         let stackViewLeadingConstraint = self.loginPasswordStackView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: 16)
         let stackViewHeightConstraint = self.loginPasswordStackView.heightAnchor.constraint(equalToConstant: 100)
@@ -143,7 +147,8 @@ class LoginViewController: UIViewController {
             , heghtLogoConstraint
             , xPosLogoConstraint
             
-            , stackViewTopConstraint
+            , stackViewCenterY
+            
             , stackViewTrailingConstraint
             , stackViewLeadingConstraint
             , stackViewHeightConstraint
@@ -170,21 +175,32 @@ class LoginViewController: UIViewController {
     @objc private func didTapStatusButton() {
         show(ProfileViewController(), sender: nil)
         view.endEditing(true)
+        
+        
     }
     
     // Изменение отступов при появлении клавиатуры
     @objc private func kbdShow(notification: NSNotification) {
-        if let kbdSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
-            scrollView.contentInset.bottom = kbdSize.height+40
-            scrollView.verticalScrollIndicatorInsets = UIEdgeInsets(top: 0,left: 0, bottom: kbdSize.height, right: 0)
-            
+        if ((notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue) != nil {
+            scrollView.contentOffset.y = 10
         }
     }
     
     @objc private func kbdHide(notification: NSNotification) {
-        scrollView.contentInset.bottom = .zero
-        scrollView.verticalScrollIndicatorInsets = .zero
+        scrollView.contentOffset.y = .zero
+    }
 }
 
+extension LoginViewController {
+    func hideKeyboard() {
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer (target: self, action: #selector(dismissKeyboard))
+        
+        tap.cancelsTouchesInView = false
+        view.addGestureRecognizer(tap)
+    }
+    
+    @objc private func dismissKeyboard() {
+        self.view.endEditing(true)
+    
+    }
 }
-

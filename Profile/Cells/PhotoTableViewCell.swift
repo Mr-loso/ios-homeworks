@@ -30,24 +30,29 @@ final class PhotoTableViewCell: UITableViewCell {
         collectionView.register(CustomCollectionViewCell.self, forCellWithReuseIdentifier: "CustomCell")
         collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "DefaultCell")
         collectionView.translatesAutoresizingMaskIntoConstraints = false
+        
+        
         return collectionView
     }()
     
     var numberOfPictures: Int = 4
     
     private func setupView() {
-        self.contentView.backgroundColor = .cyan
+       
         
         self.contentView.addSubview(collectionView)
         
-        let topConstraint = self.collectionView.topAnchor.constraint(equalTo: self.contentView.topAnchor)
-        let leftConstraint = self.collectionView.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor)
-        let rightConstraint = self.collectionView.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor)
-        let bottomConstraint = self.collectionView.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor)
-        let contentHeight = self.contentView.heightAnchor.constraint(equalToConstant: 50)
+        
+        let topCollectionConstraint = self.collectionView.topAnchor.constraint(equalTo: self.contentView.topAnchor)
+        let leftCollectionConstraint = self.collectionView.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 16)
+        let rightCollectionConstraint = self.collectionView.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -16)
+        let bottomCollectionConstraint = self.collectionView.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor)
+        let contentHeight = self.contentView.heightAnchor.constraint(equalToConstant: 90)
         
         NSLayoutConstraint.activate([
-            topConstraint, leftConstraint, rightConstraint, bottomConstraint, contentHeight
+    
+            
+            topCollectionConstraint, leftCollectionConstraint, rightCollectionConstraint, bottomCollectionConstraint, contentHeight
         ].compactMap({ $0 }))
         
         
@@ -57,6 +62,7 @@ final class PhotoTableViewCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         self.setupView()
+        
     }
     
     required init?(coder: NSCoder) {
@@ -66,7 +72,7 @@ final class PhotoTableViewCell: UITableViewCell {
     
     
     private func itemSize(for width: CGFloat, with spacing: CGFloat) -> CGSize {
-        let neededWidth = width - 3 * spacing
+        let neededWidth = width - 4 * spacing
         let itemWidth = floor(neededWidth / PhotoTableViewCell.itemCount)
         return CGSize(width: itemWidth, height: itemWidth)
     }
@@ -85,9 +91,14 @@ extension PhotoTableViewCell: UICollectionViewDataSource, UICollectionViewDelega
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CustomCell", for: indexPath) as? CustomCollectionViewCell else {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "DefaultCell", for: indexPath)
             
+            
+            
             cell.backgroundColor = .systemRed
             return cell
         }
+        
+        let viewModel = CustomCollectionViewCell.ViewModel(picture: UIImage(named: String(indexPath.row)))
+        cell.setup(with: viewModel)
     
        return cell
     }

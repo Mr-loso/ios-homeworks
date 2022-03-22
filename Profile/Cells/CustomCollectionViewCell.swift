@@ -14,7 +14,8 @@ class CustomCollectionViewCell: UICollectionViewCell {
         pic.backgroundColor = .systemRed
         pic.layer.cornerRadius = 6
         pic.clipsToBounds = true
-        //pic.image = UIImage(named: "News0")
+        //pic.contentMode = .scaleAspectFit
+        
         pic.translatesAutoresizingMaskIntoConstraints = false
         
         return pic
