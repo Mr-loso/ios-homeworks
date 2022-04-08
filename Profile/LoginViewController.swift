@@ -23,7 +23,8 @@ class LoginViewController: UIViewController {
         self.scrollView.addSubview(self.contentView)
         self.contentView.addSubview(self.mainLogoImage)
         self.contentView.addSubview(self.logInButton)
-        self.contentView.addSubview(loginPasswordStackView)
+        self.contentView.addSubview(self.loginPasswordStackView)
+        self.contentView.addSubview(self.messageLabel)
         self.loginPasswordStackView.addArrangedSubview(self.loginTextField)
         self.loginPasswordStackView.addArrangedSubview(self.passwordTextField)
         self.setupConstraints()
@@ -43,18 +44,30 @@ class LoginViewController: UIViewController {
         return scrollView
     }()
     
+    private lazy var messageLabel: UILabel = {
+        let label = UILabel()
+        label.text = "something wrong"
+        label.isHidden = true
+        label.font = .boldSystemFont(ofSize: 16)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
     private lazy var loginPasswordStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .vertical
         stackView.spacing = 0
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.distribution = .fillEqually
+        stackView.layer.borderWidth = 1
+        stackView.layer.cornerRadius = 10
+        stackView.layer.borderColor = UIColor.lightGray.cgColor
         return stackView
     } ()
     
     private lazy var loginTextField: UITextField = {
         let login = UITextField()
-        login.placeholder = " Email or phone"
+        login.placeholder = "Email or phone"
         login.layer.borderWidth = 0.5
         login.layer.borderColor = UIColor.lightGray.cgColor
         login.layer.cornerRadius = 10
@@ -66,7 +79,7 @@ class LoginViewController: UIViewController {
     
     private lazy var passwordTextField: UITextField = {
         let pass = UITextField()
-        pass.placeholder = " Password"
+        pass.placeholder = "Password"
         pass.layer.borderWidth = 0.5
         pass.layer.borderColor = UIColor.lightGray.cgColor
         pass.layer.cornerRadius = 10
@@ -126,6 +139,10 @@ class LoginViewController: UIViewController {
         let topButtonConstraint = self.logInButton.topAnchor.constraint(equalTo: self.loginPasswordStackView.bottomAnchor, constant: 16)
         let heghtButtonConstraint = self.logInButton.heightAnchor.constraint(equalToConstant: 50)
 
+        let messageLabelBottomConstraint = self.messageLabel.bottomAnchor.constraint(equalTo: self.loginPasswordStackView.topAnchor, constant: -10)
+        let messageLabelLeadingConstraint = self.messageLabel.leadingAnchor.constraint(equalTo: self.loginPasswordStackView.leadingAnchor)
+        
+        
         NSLayoutConstraint.activate([
             scrollViewTopConstraint
             , scrollViewRightConstraint
@@ -152,6 +169,9 @@ class LoginViewController: UIViewController {
             , stackViewTrailingConstraint
             , stackViewLeadingConstraint
             , stackViewHeightConstraint
+            
+            , messageLabelBottomConstraint
+            , messageLabelLeadingConstraint
         ].compactMap({ $0 }))
     }
     
@@ -173,10 +193,105 @@ class LoginViewController: UIViewController {
     
     
     @objc private func didTapStatusButton() {
+      
+        switch passwordTextField.text {
+    
+        
+        case "123":
+            
+            switch loginTextField.text {
+            case "":
+                self.messageLabel.text = "enter login"
+                UIView.animate(withDuration: 0.5) {
+                    self.view.layoutIfNeeded()
+                    self.loginPasswordStackView.layer.borderColor = UIColor.red.cgColor
+                    
+                } completion: { _ in
+            }
+                view.endEditing(true)
+                print("click")
+                
+                UIView.animate(withDuration: 0.5, delay: 1) {
+                    self.view.layoutIfNeeded()
+                    self.loginPasswordStackView.layer.borderColor = UIColor.lightGray.cgColor
+                   
+                    
+                } completion: { _ in
+            }
+            case "Admin":
+                
+                show(ProfileViewController(), sender: nil)
+                view.endEditing(true)
+            
+            default:
+                self.messageLabel.isHidden = false
+                self.messageLabel.text = "wrong login"
+                
+                UIView.animate(withDuration: 0.5) {
+                    self.view.layoutIfNeeded()
+                    self.loginPasswordStackView.layer.borderColor = UIColor.red.cgColor
+                    
+                } completion: { _ in
+            }
+                view.endEditing(true)
+                print("click")
+                
+                UIView.animate(withDuration: 0.5, delay: 1) {
+                    self.view.layoutIfNeeded()
+                    self.loginPasswordStackView.layer.borderColor = UIColor.lightGray.cgColor
+                   
+                    
+                } completion: { _ in
+            }
+            }
+            
+        case "":
+            self.messageLabel.isHidden = false
+            self.messageLabel.text = "enter password"
+            
+            UIView.animate(withDuration: 0.5) {
+                self.view.layoutIfNeeded()
+                self.loginPasswordStackView.layer.borderColor = UIColor.red.cgColor
+                
+            } completion: { _ in
+        }
+            view.endEditing(true)
+            print("click")
+            
+            UIView.animate(withDuration: 0.5, delay: 1) {
+                self.view.layoutIfNeeded()
+                self.loginPasswordStackView.layer.borderColor = UIColor.lightGray.cgColor
+               
+                
+            } completion: { _ in
+        }
+            
+    
+        default:
+            self.messageLabel.isHidden = false
+            self.messageLabel.text = "wrong login or password"
+            
+            UIView.animate(withDuration: 0.5) {
+                self.view.layoutIfNeeded()
+                self.loginPasswordStackView.layer.borderColor = UIColor.red.cgColor
+                
+            } completion: { _ in
+        }
+            view.endEditing(true)
+            print("click")
+            
+            UIView.animate(withDuration: 0.5, delay: 1) {
+                self.view.layoutIfNeeded()
+                self.loginPasswordStackView.layer.borderColor = UIColor.lightGray.cgColor
+               
+                
+            } completion: { _ in
+        }
+        }
+        
+        
         show(ProfileViewController(), sender: nil)
         view.endEditing(true)
-        
-        
     }
     
     // Изменение отступов при появлении клавиатуры

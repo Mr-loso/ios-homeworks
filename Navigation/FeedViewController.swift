@@ -40,8 +40,6 @@ class FeedViewController: UIViewController {
         return view
     } ()
     
-    
-    
     private lazy var closeButton: UIButton = {
         let button = UIButton()
         button.setTitle("Close", for: .normal)
@@ -49,7 +47,7 @@ class FeedViewController: UIViewController {
         button.backgroundColor = .darkGray
         button.layer.cornerRadius = 15
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.addTarget(self, action: #selector(tapGesture(_:)), for: .allEvents)
+        button.addTarget(self, action: #selector(self.tapGesture(_:)), for: .allEvents)
         return button
     } ()
     
@@ -112,7 +110,6 @@ class FeedViewController: UIViewController {
     }
     
     @objc private func tapGesture(_ recognizedGesture: UITapGestureRecognizer) {
-        print("TAP")
         guard self.prifileImageTapGesture === recognizedGesture else { return }
         
         self.isExpanded.toggle()
@@ -133,8 +130,6 @@ class FeedViewController: UIViewController {
             self.closeButton.alpha = self.isExpanded ? 0.8 : 0
         } completion: { _ in
         }
-
-        
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
