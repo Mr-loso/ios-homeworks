@@ -290,7 +290,6 @@ class LoginViewController: UIViewController {
         }
         
         
-        show(ProfileViewController(), sender: nil)
         view.endEditing(true)
     }
     
