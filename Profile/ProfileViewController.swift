@@ -18,7 +18,6 @@ class ProfileViewController: UIViewController {
             self?.dataSource = articles
             self?.tableView.reloadData()
         }
-        
     }
     
     private var heightConstraint: NSLayoutConstraint?

@@ -10,21 +10,16 @@ class CustomCollectionViewCell: UICollectionViewCell {
     
     private lazy var pictire: UIImageView = {
         let pic = UIImageView()
-        
         pic.backgroundColor = .systemRed
         pic.layer.cornerRadius = 6
         pic.clipsToBounds = true
-        //pic.contentMode = .scaleAspectFit
-        
         pic.translatesAutoresizingMaskIntoConstraints = false
-        
         return pic
     } ()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.contentView.addSubview(self.pictire)
-        
         let topTableConstraint = self.pictire.topAnchor.constraint(equalTo: self.contentView.topAnchor)
         let leadingTableConstraint = self.pictire.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor)
         let trailingTableConstraint = self.pictire.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor)

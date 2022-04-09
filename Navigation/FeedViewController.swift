@@ -104,17 +104,13 @@ class FeedViewController: UIViewController {
     
     private func setupGesture () {
         self.prifileImageTapGesture.addTarget(self, action: #selector(self.tapGesture(_:)))
-
         self.profilePhoto.addGestureRecognizer(self.prifileImageTapGesture)
-
     }
     
     @objc private func tapGesture(_ recognizedGesture: UITapGestureRecognizer) {
         guard self.prifileImageTapGesture === recognizedGesture else { return }
         
         self.isExpanded.toggle()
-        
-        
     
         self.left?.constant = self.isExpanded ? 0 : 100
         self.right?.constant = self.isExpanded ? 0 : -100

@@ -140,7 +140,6 @@ class ProfileHeaderView: UIView {
     
     
     @objc private func didTapStatusButton() {
-        print("статус")
         
         if self.textField.isHidden {
             self.addSubview(self.textField)
@@ -156,7 +155,7 @@ class ProfileHeaderView: UIView {
             self.buttonTopConstraint?.isActive = false
             self.buttonTopConstraint = self.statusButton.topAnchor.constraint(equalTo: self.infoStackView.bottomAnchor, constant: 16)
             self.statusButton.setTitle("Set status", for: .normal)
-            if textField.text != nil {
+            if textField.text != "" {
                 self.statusLabel.text = self.textField.text
             }
             self.textField.text = nil
@@ -171,5 +170,12 @@ class ProfileHeaderView: UIView {
         self.delegate?.didTapStatusButton(textFieldIsVisible: self.textField.isHidden) { [weak self] in
             self?.textField.isHidden.toggle()
         }
+    }
+}
+
+
+extension UIImage {
+    func showPictureFullScreen (image: String) {
+        
     }
 }

@@ -11,7 +11,6 @@ class LoginViewController: UIViewController {
     
     override func viewDidLoad() {
         
-        super.viewDidLoad()
         self.hideKeyboard()
         self.setupView()
         self.setupConstraints()
@@ -195,96 +194,97 @@ class LoginViewController: UIViewController {
     @objc private func didTapStatusButton() {
       
         switch passwordTextField.text {
-    
-        
+
+
         case "123":
-            
+
             switch loginTextField.text {
             case "":
                 self.messageLabel.text = "enter login"
                 UIView.animate(withDuration: 0.5) {
                     self.view.layoutIfNeeded()
                     self.loginPasswordStackView.layer.borderColor = UIColor.red.cgColor
-                    
+
                 } completion: { _ in
             }
                 view.endEditing(true)
                 print("click")
-                
+
                 UIView.animate(withDuration: 0.5, delay: 1) {
                     self.view.layoutIfNeeded()
                     self.loginPasswordStackView.layer.borderColor = UIColor.lightGray.cgColor
-                   
-                    
+
+
                 } completion: { _ in
             }
             case "Admin":
-                
+
                 show(ProfileViewController(), sender: nil)
                 view.endEditing(true)
-            
+
             default:
                 self.messageLabel.isHidden = false
                 self.messageLabel.text = "wrong login"
-                
+
                 UIView.animate(withDuration: 0.5) {
                     self.view.layoutIfNeeded()
                     self.loginPasswordStackView.layer.borderColor = UIColor.red.cgColor
-                    
+
                 } completion: { _ in
             }
                 view.endEditing(true)
                 print("click")
-                
+
                 UIView.animate(withDuration: 0.5, delay: 1) {
                     self.view.layoutIfNeeded()
                     self.loginPasswordStackView.layer.borderColor = UIColor.lightGray.cgColor
-                   
-                    
+
+
                 } completion: { _ in
             }
             }
-            
+
         case "":
             self.messageLabel.isHidden = false
             self.messageLabel.text = "enter password"
-            
+
             UIView.animate(withDuration: 0.5) {
                 self.view.layoutIfNeeded()
                 self.loginPasswordStackView.layer.borderColor = UIColor.red.cgColor
-                
+
             } completion: { _ in
         }
             view.endEditing(true)
             print("click")
-            
+
             UIView.animate(withDuration: 0.5, delay: 1) {
                 self.view.layoutIfNeeded()
                 self.loginPasswordStackView.layer.borderColor = UIColor.lightGray.cgColor
-               
-                
+
+
             } completion: { _ in
         }
-            
-    
+
+
         default:
             self.messageLabel.isHidden = false
             self.messageLabel.text = "wrong login or password"
-            
+
             UIView.animate(withDuration: 0.5) {
                 self.view.layoutIfNeeded()
                 self.loginPasswordStackView.layer.borderColor = UIColor.red.cgColor
-                
+
             } completion: { _ in
         }
             view.endEditing(true)
             print("click")
-            
+
+        super.viewDidLoad()
             UIView.animate(withDuration: 0.5, delay: 1) {
                 self.view.layoutIfNeeded()
                 self.loginPasswordStackView.layer.borderColor = UIColor.lightGray.cgColor
-               
-                
+
+
             } completion: { _ in
         }
         }
@@ -294,7 +294,6 @@ class LoginViewController: UIViewController {
         view.endEditing(true)
     }
     
-    // Изменение отступов при появлении клавиатуры
     @objc private func kbdShow(notification: NSNotification) {
         if ((notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue) != nil {
             scrollView.contentOffset.y = 10

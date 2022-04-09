@@ -76,6 +76,18 @@ final class DynamicArticleTableViewCell: UITableViewCell {
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
+    
+    private lazy var likesButton: UIButton = {
+        let button = UIButton()
+        button.backgroundColor = .red
+        button.alpha = 0.7
+        button.addTarget(self, action: #selector(self.didTapLikeButton), for: .touchUpInside)
+        button.setTitle("0", for: .normal)
+        button.layer.cornerRadius = 11
+        button.clipsToBounds = true
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+        } ()
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -101,15 +113,11 @@ final class DynamicArticleTableViewCell: UITableViewCell {
         self.stackView.addArrangedSubview(self.titleLabel)
         self.stackView.addArrangedSubview(self.NewsImage)
         self.stackView.addArrangedSubview(self.descriptionLabel)
+        self.stackView.addSubview(self.likesButton)
         self.stackView.addArrangedSubview(self.dateTitle)
         
         let backViewConstraints = self.backViewConstraints()
         let stackViewConstraints = self.stackViewConstraints()
-        
-        
-        
-        
-        
 
         NSLayoutConstraint.activate(backViewConstraints + stackViewConstraints)
     }
@@ -132,12 +140,27 @@ final class DynamicArticleTableViewCell: UITableViewCell {
         let bottomConstraint = self.stackView.bottomAnchor.constraint(equalTo: self.backView.bottomAnchor)
         
         let imageViewAspectRatio = self.NewsImage.heightAnchor.constraint(equalTo: self.NewsImage.widthAnchor, multiplier: 0.5625)
+    
+        let trailingButtonConstraint = self.likesButton.trailingAnchor.constraint(equalTo: self.backView.safeAreaLayoutGuide.trailingAnchor)
+        let topButtonConstraint = self.likesButton.topAnchor.constraint(equalTo: self.descriptionLabel.bottomAnchor)
+        let widthButtonConstraint = self.likesButton.widthAnchor.constraint(equalToConstant: 60)
+        let heightButtonConstraint = self.likesButton.heightAnchor.constraint(equalToConstant: 22)
+        
 
         return [
-            topConstraint, leadingConstraint, trailingConstraint, bottomConstraint, imageViewAspectRatio
+            topConstraint, leadingConstraint, trailingConstraint, bottomConstraint, imageViewAspectRatio, heightButtonConstraint, trailingButtonConstraint, topButtonConstraint, widthButtonConstraint
         ]
     }
+    
+    
+    @objc private func didTapLikeButton() {
+        var likes = Int((likesButton.titleLabel?.text)!)
+        likes! += 1
+        self.likesButton.setTitle(String(likes!), for: .normal)
+    }
 }
+
+
 
 extension DynamicArticleTableViewCell: Setupable {
     
