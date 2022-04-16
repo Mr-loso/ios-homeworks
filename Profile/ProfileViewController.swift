@@ -13,6 +13,7 @@ class ProfileViewController: UIViewController {
         super.viewDidLoad()
         self.hideKeyboard()
         self.setupView()
+        self.setupGesture()
         self.setupNavigationBar()
         self.fetchArticles { [weak self] articles in
             self?.dataSource = articles
@@ -20,7 +21,35 @@ class ProfileViewController: UIViewController {
         }
     }
     
+    private lazy var closeButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("Close", for: .normal)
+        button.alpha = 0
+        button.backgroundColor = .darkGray
+        button.layer.cornerRadius = 15
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.addTarget(self, action: #selector(self.didTapCloseButton), for: .touchUpInside)
+        return button
+    } ()
+    
+    private lazy var shadowView: UIView = {
+        let view = UIView()
+        view.alpha = 0
+        view.backgroundColor = .black
+        view.translatesAutoresizingMaskIntoConstraints = false
+        
+        return view
+    } ()
+    
+    private var centerX: NSLayoutConstraint?
+    private var centerY: NSLayoutConstraint?
+    private var imageWidth: NSLayoutConstraint?
+
+    private var isExpanded = false
+    
     private var heightConstraint: NSLayoutConstraint?
+    
+    private let prifileImageTapGesture = UITapGestureRecognizer()
     
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
@@ -38,6 +67,68 @@ class ProfileViewController: UIViewController {
         tableView.translatesAutoresizingMaskIntoConstraints = false
         return tableView
     }()
+    
+    private lazy var imageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.backgroundColor = .systemRed
+        imageView.image = UIImage(named: "Prof")
+        imageView.layer.cornerRadius = 53
+        imageView.clipsToBounds = true
+        imageView.isUserInteractionEnabled = true
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        return imageView
+    } ()
+    
+    private func setupGesture () {
+        self.prifileImageTapGesture.addTarget(self, action: #selector(self.tapGesture(_:)))
+        self.imageView.addGestureRecognizer(self.prifileImageTapGesture)
+    }
+    
+    @objc private func tapGesture(_ recognizedGesture: UITapGestureRecognizer) {
+        guard self.prifileImageTapGesture === recognizedGesture else { return }
+        
+        self.isExpanded.toggle()
+    
+        self.centerX?.constant = self.isExpanded ? 0 : -118
+        self.centerY?.constant = self.isExpanded ? -90 : -350
+        self.imageWidth?.constant = self.isExpanded ? UIScreen.main.bounds.width : UIScreen.main.bounds.width/3.58
+        
+        
+        UIView.animate(withDuration: 0.5) {
+            self.view.layoutIfNeeded()
+            self.shadowView.alpha = self.isExpanded ? 0.9 : 0
+            self.tabBarController?.tabBar.alpha = self.isExpanded ? 0 : 1
+            self.navigationController?.navigationBar.alpha = self.isExpanded ? 0 : 1
+            
+        } completion: { _ in }
+    
+        UIView.animate(withDuration: 0.3, delay: 0.5) {
+            self.closeButton.alpha = self.isExpanded ? 0.8 : 0
+        } completion: { _ in }
+    }
+    
+    @objc private func didTapCloseButton() {
+        print("click")
+        self.isExpanded.toggle()
+    
+        self.centerX?.constant = self.isExpanded ? 0 : -118
+        self.centerY?.constant = self.isExpanded ? -90 : -350
+        self.imageWidth?.constant = self.isExpanded ? UIScreen.main.bounds.width : UIScreen.main.bounds.width/3.58
+        
+        
+        UIView.animate(withDuration: 0.5) {
+            self.view.layoutIfNeeded()
+            self.shadowView.alpha = self.isExpanded ? 0.9 : 0
+            self.tabBarController?.tabBar.alpha = self.isExpanded ? 0 : 1
+            self.navigationController?.navigationBar.alpha = self.isExpanded ? 0 : 1
+            
+        } completion: { _ in }
+    
+        UIView.animate(withDuration: 0.3, delay: 0.5) {
+            self.closeButton.alpha = self.isExpanded ? 0.8 : 0
+        } completion: { _ in }
+        
+    }
     
     private lazy var jsonDecoder: JSONDecoder = {
         return JSONDecoder()
@@ -59,8 +150,11 @@ class ProfileViewController: UIViewController {
 
     private func setupView() {
         
-        
+        self.tableView.addSubview(self.shadowView)
         self.view.addSubview(self.tableView)
+        self.shadowView.addSubview(closeButton)
+        self.tableView.addSubview(self.imageView)
+        
         
         
         let topTableConstraint = self.tableView.topAnchor.constraint(equalTo: self.view.topAnchor)
@@ -68,6 +162,24 @@ class ProfileViewController: UIViewController {
         let trailingTableConstraint = self.tableView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor)
         let bottomTableConstraint = self.tableView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor)
         
+        let topShadowConstraint = self.shadowView.topAnchor.constraint(equalTo: self.view.topAnchor)
+        let leadingShadowConstraint = self.shadowView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor)
+        let trailingShadowConstraint = self.shadowView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor)
+        let bottomShadowConstraint = self.shadowView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor)
+        
+        let closeButtonTopAnchor = self.closeButton.topAnchor.constraint(equalTo: self.shadowView.topAnchor, constant: 100)
+        let closeButtonRightAnchor = self.closeButton.trailingAnchor.constraint(equalTo: self.shadowView.trailingAnchor, constant: -20)
+        let closeButtonHeightAnchor = self.closeButton.heightAnchor.constraint(equalToConstant: 30)
+        let closeButtonWidthAnchor = self.closeButton.widthAnchor.constraint(equalToConstant: 70)
+        
+        self.centerX = self.imageView.centerXAnchor.constraint(equalTo: self.tableView.centerXAnchor, constant: -118)
+        self.centerY = self.imageView.centerYAnchor.constraint(equalTo: self.tableView.centerYAnchor, constant: -350)
+        
+        self.imageWidth = self.imageView.widthAnchor.constraint(equalToConstant: 106)
+        
+        //
+    
+        let imageViewAspectRatio = self.imageView.heightAnchor.constraint(equalTo: self.imageView.widthAnchor, multiplier: 1.0)
 
         
         NSLayoutConstraint.activate([
@@ -75,6 +187,18 @@ class ProfileViewController: UIViewController {
             , leadingTableConstraint
             , trailingTableConstraint
             , bottomTableConstraint
+            , imageViewAspectRatio
+             , self.centerY
+             , self.centerX
+             , self.imageWidth
+             , topShadowConstraint
+             , leadingShadowConstraint
+             , trailingShadowConstraint
+             , bottomShadowConstraint
+             , closeButtonTopAnchor
+             , closeButtonRightAnchor
+             , closeButtonHeightAnchor
+             , closeButtonWidthAnchor
         ].compactMap({ $0 }))
     }
     

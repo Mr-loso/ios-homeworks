@@ -15,8 +15,8 @@ class ProfileHeaderView: UIView {
     
     private lazy var imageView: UIImageView = {
         let imageView = UIImageView()
+        imageView.alpha = 0
         imageView.backgroundColor = .systemRed
-        imageView.image = UIImage(named: "Prof")
         imageView.layer.cornerRadius = 53
         imageView.layer.borderColor = UIColor.white.cgColor
         imageView.layer.borderWidth = 3;

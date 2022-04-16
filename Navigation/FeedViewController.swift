@@ -45,9 +45,9 @@ class FeedViewController: UIViewController {
         button.setTitle("Close", for: .normal)
         button.alpha = 0
         button.backgroundColor = .darkGray
+        button.addTarget(self, action: #selector(self.didTapCloseButton), for: .touchUpInside)
         button.layer.cornerRadius = 15
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.addTarget(self, action: #selector(self.tapGesture(_:)), for: .allEvents)
         return button
     } ()
     
@@ -80,7 +80,7 @@ class FeedViewController: UIViewController {
         self.right = self.profilePhoto.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -120)
         let imageViewAspectRatio = self.profilePhoto.heightAnchor.constraint(equalTo: self.profilePhoto.widthAnchor, multiplier: 1.0)
         
-        let closeButtonTopAnchor = self.closeButton.topAnchor.constraint(equalTo: self.shadowView.topAnchor, constant: 50)
+        let closeButtonTopAnchor = self.closeButton.topAnchor.constraint(equalTo: self.shadowView.topAnchor, constant: 100)
         let closeButtonRightAnchor = self.closeButton.trailingAnchor.constraint(equalTo: self.shadowView.trailingAnchor, constant: -20)
         let closeButtonHeightAnchor = self.closeButton.heightAnchor.constraint(equalToConstant: 30)
         let closeButtonWidthAnchor = self.closeButton.widthAnchor.constraint(equalToConstant: 70)
@@ -119,6 +119,7 @@ class FeedViewController: UIViewController {
             self.view.layoutIfNeeded()
             self.shadowView.alpha = self.isExpanded ? 0.8 : 0
             self.tabBarController?.tabBar.alpha = self.isExpanded ? 0 : 1
+            self.navigationController?.navigationBar.alpha = self.isExpanded ? 0 : 1
         } completion: { _ in
     }
     
@@ -136,5 +137,26 @@ class FeedViewController: UIViewController {
 
         postViewController.ViewPost1 = FeedViewController.post11.init()
     }
+    
+    @objc private func didTapCloseButton() {
+        
+        
+        self.isExpanded.toggle()
+        print("click")
+        self.left?.constant = self.isExpanded ? 0 : 100
+        self.right?.constant = self.isExpanded ? 0 : -100
+        
+        UIView.animate(withDuration: 0.5) {
+            self.view.layoutIfNeeded()
+            self.shadowView.alpha = self.isExpanded ? 0.8 : 0
+            self.tabBarController?.tabBar.alpha = self.isExpanded ? 0 : 1
+            self.navigationController?.navigationBar.alpha = self.isExpanded ? 0 : 1
+        } completion: { _ in
+    }
+    
+        UIView.animate(withDuration: 0.3, delay: 0.5) {
+            self.closeButton.alpha = self.isExpanded ? 0.8 : 0
+        } completion: { _ in
+        }    }
 }
 
