@@ -44,7 +44,7 @@ final class HeaderTableViewCell: UITableViewCell {
         let leadingConstraint = self.profileHeaderView.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor)
         let trailingConstraint = self.profileHeaderView.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor)
         self.headerHeightConstraint = self.profileHeaderView.heightAnchor.constraint(equalToConstant: 192)
-        self.contentHeightConstraint = self.contentView.heightAnchor.constraint(equalToConstant: 230)
+        self.contentHeightConstraint = self.contentView.heightAnchor.constraint(equalToConstant: 192)
         
         
         

@@ -142,7 +142,6 @@ class FeedViewController: UIViewController {
         
         
         self.isExpanded.toggle()
-        print("click")
         self.left?.constant = self.isExpanded ? 0 : 100
         self.right?.constant = self.isExpanded ? 0 : -100
         

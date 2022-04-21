@@ -18,11 +18,12 @@ final class DynamicArticleTableViewCell: UITableViewCell {
         let newsImage: UIImage?
     }
     
+    var likesCount = 0
+    
     private lazy var NewsImage: UIImageView = {
         let image = UIImageView()
         image.clipsToBounds = true
         image.translatesAutoresizingMaskIntoConstraints = false
-        
         return image
     } ()
     
@@ -70,9 +71,21 @@ final class DynamicArticleTableViewCell: UITableViewCell {
     private lazy var dateTitle: UILabel = {
         let label = UILabel()
         label.backgroundColor = .clear
-        label.font = UIFont.boldSystemFont(ofSize: 12)
+        label.alpha = 0
+        label.font = UIFont.boldSystemFont(ofSize: 14)
         label.textColor = .gray
         label.setContentCompressionResistancePriority(UILayoutPriority(750), for: .vertical)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    private lazy var viewsLabel: UIButton = {
+        let label = UIButton()
+        label.backgroundColor = .systemBlue
+        label.alpha = 0.6
+        label.setTitle("views: 1", for: .normal)
+        label.layer.cornerRadius = 11
+        label.clipsToBounds = true
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -80,9 +93,9 @@ final class DynamicArticleTableViewCell: UITableViewCell {
     private lazy var likesButton: UIButton = {
         let button = UIButton()
         button.backgroundColor = .red
-        button.alpha = 0.7
+        button.alpha = 0.6
         button.addTarget(self, action: #selector(self.didTapLikeButton), for: .touchUpInside)
-        button.setTitle("0", for: .normal)
+        button.setTitle("likes: 0", for: .normal)
         button.layer.cornerRadius = 11
         button.clipsToBounds = true
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -98,41 +111,29 @@ final class DynamicArticleTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func prepareForReuse() {
-        super.prepareForReuse()
-        self.titleLabel.text = nil
-        self.descriptionLabel.text = nil
-        self.dateTitle.text = nil
-    }
-    
     private func setupView() {
         self.contentView.backgroundColor = .white
-
         self.contentView.addSubview(self.backView)
         self.backView.addSubview(self.stackView)
         self.stackView.addArrangedSubview(self.titleLabel)
         self.stackView.addArrangedSubview(self.NewsImage)
         self.stackView.addArrangedSubview(self.descriptionLabel)
-        self.stackView.addSubview(self.likesButton)
         self.stackView.addArrangedSubview(self.dateTitle)
-        
+        self.stackView.addSubview(self.likesButton)
+        self.stackView.addSubview(self.viewsLabel)
         let backViewConstraints = self.backViewConstraints()
         let stackViewConstraints = self.stackViewConstraints()
-
         NSLayoutConstraint.activate(backViewConstraints + stackViewConstraints)
     }
-    
     private func backViewConstraints() -> [NSLayoutConstraint] {
         let topConstraint = self.backView.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 10)
         let leadingConstraint = self.backView.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 16)
         let trailingConstraint = self.backView.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -16)
         let bottomConstraint = self.backView.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: -10)
-
         return [
             topConstraint, leadingConstraint, trailingConstraint, bottomConstraint
         ]
     }
-    
     private func stackViewConstraints() -> [NSLayoutConstraint] {
         let topConstraint = self.stackView.topAnchor.constraint(equalTo: self.backView.topAnchor)
         let leadingConstraint = self.stackView.leadingAnchor.constraint(equalTo: self.backView.leadingAnchor)
@@ -143,20 +144,21 @@ final class DynamicArticleTableViewCell: UITableViewCell {
     
         let trailingButtonConstraint = self.likesButton.trailingAnchor.constraint(equalTo: self.backView.safeAreaLayoutGuide.trailingAnchor)
         let topButtonConstraint = self.likesButton.topAnchor.constraint(equalTo: self.descriptionLabel.bottomAnchor)
-        let widthButtonConstraint = self.likesButton.widthAnchor.constraint(equalToConstant: 60)
-        let heightButtonConstraint = self.likesButton.heightAnchor.constraint(equalToConstant: 22)
-        
-
+        let widthButtonConstraint = self.likesButton.widthAnchor.constraint(equalToConstant: 90)
+        let heightButtonConstraint = self.likesButton.heightAnchor.constraint(equalToConstant: 26)
+        let trailingViewsLabelConstraint = self.viewsLabel.leadingAnchor.constraint(equalTo: self.backView.safeAreaLayoutGuide.leadingAnchor)
+        let topViewsLabelConstraint = self.viewsLabel.topAnchor.constraint(equalTo: self.descriptionLabel.bottomAnchor)
+        let widthiewsLabelConstraint = self.viewsLabel.widthAnchor.constraint(equalToConstant: 90)
+        let heightiewsLabelConstraint = self.viewsLabel.heightAnchor.constraint(equalToConstant: 26)
         return [
-            topConstraint, leadingConstraint, trailingConstraint, bottomConstraint, imageViewAspectRatio, heightButtonConstraint, trailingButtonConstraint, topButtonConstraint, widthButtonConstraint
+            topConstraint, leadingConstraint, trailingConstraint, bottomConstraint, imageViewAspectRatio, heightButtonConstraint, trailingButtonConstraint, topButtonConstraint, widthButtonConstraint, trailingViewsLabelConstraint, topViewsLabelConstraint, widthiewsLabelConstraint, heightiewsLabelConstraint
         ]
     }
     
     
     @objc private func didTapLikeButton() {
-        var likes = Int((likesButton.titleLabel?.text)!)
-        likes! += 1
-        self.likesButton.setTitle(String(likes!), for: .normal)
+        likesCount += 1
+        self.likesButton.setTitle(String("likes: " + String (likesCount)), for: .normal)
     }
 }
 
@@ -166,7 +168,6 @@ extension DynamicArticleTableViewCell: Setupable {
     
     func setup(with viewModel: ViewModelProtocol) {
         guard let viewModel = viewModel as? ViewModel else { return }
-        
         self.titleLabel.text = viewModel.title
         self.descriptionLabel.text = viewModel.description
         self.dateTitle.text = viewModel.publishedAt

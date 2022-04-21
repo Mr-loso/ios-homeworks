@@ -100,6 +100,7 @@ class ProfileViewController: UIViewController {
             self.tabBarController?.tabBar.alpha = self.isExpanded ? 0 : 1
             self.navigationController?.navigationBar.alpha = self.isExpanded ? 0 : 1
             
+            
         } completion: { _ in }
     
         UIView.animate(withDuration: 0.3, delay: 0.5) {
@@ -114,7 +115,6 @@ class ProfileViewController: UIViewController {
         self.centerX?.constant = self.isExpanded ? 0 : -118
         self.centerY?.constant = self.isExpanded ? -90 : -350
         self.imageWidth?.constant = self.isExpanded ? UIScreen.main.bounds.width : UIScreen.main.bounds.width/3.58
-        
         
         UIView.animate(withDuration: 0.5) {
             self.view.layoutIfNeeded()
@@ -201,7 +201,7 @@ class ProfileViewController: UIViewController {
              , closeButtonWidthAnchor
         ].compactMap({ $0 }))
     }
-    
+
     private func fetchArticles(completion: @escaping ([News.Article]) -> Void) {
         if let path = Bundle.main.path(forResource: "news", ofType: "json") {
             do {
@@ -278,8 +278,25 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if indexPath.row == 1{
+        switch indexPath.row {
+        
+        case 0,2:
+            return
+            
+        case 1:
         self.navigationController?.pushViewController(PhotosViewController(), animated: true)
+        
+        default:
+
+            
+            let viewController = ExpandedArticleView()
+            viewController.selectedDataImage = dataSource[indexPath.row - 3].pic
+            viewController.selectedDataLikes = dataSource[indexPath.row - 3].likes
+        
+            viewController.selectedTitle = dataSource[indexPath.row - 3].title
+            viewController.selectedDataDescription = dataSource[indexPath.row - 3].description
+            self.tableView.reloadRows(at: [indexPath], with: .none)
+            navigationController?.pushViewController(viewController, animated: true)
         }
     }
 }

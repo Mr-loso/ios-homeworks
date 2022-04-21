@@ -28,7 +28,7 @@ class ProfileHeaderView: UIView {
     private lazy var infoStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .horizontal
-        stackView.spacing = 20
+        stackView.spacing = 30
         stackView.translatesAutoresizingMaskIntoConstraints = false
         return stackView
     }()
@@ -47,10 +47,11 @@ class ProfileHeaderView: UIView {
     
     private lazy var textField: UITextField = {
         let textField = UITextField()
-        textField.isHidden = true
         textField.placeholder = "Set status"
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.text = nil
+        textField.backgroundColor = .systemGray4
+        textField.layer.cornerRadius = 8
         return textField
     }()
     
@@ -65,7 +66,7 @@ class ProfileHeaderView: UIView {
     
     private lazy var statusLabel: UILabel = {
         let label = UILabel()
-        label.text = "Set status"
+        label.text = ""
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -93,29 +94,23 @@ class ProfileHeaderView: UIView {
     private func drawSelf() {
         self.addSubview(self.infoStackView)
         self.addSubview(self.statusButton)
-        self.addSubview(self.textField)
         self.infoStackView.addArrangedSubview(self.imageView)
         self.infoStackView.addArrangedSubview(self.labelsStackView)
         self.labelsStackView.addArrangedSubview(self.nameLabel)
         self.labelsStackView.addArrangedSubview(self.statusLabel)
+        self.labelsStackView.addArrangedSubview(self.textField)
         
-        let topConstraint = self.infoStackView.topAnchor.constraint(equalTo: self.topAnchor, constant: 16)
-        let leadingConstraint = self.infoStackView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 20)
-        let trailingConstraint = self.infoStackView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -20)
+        let topConstraint = self.infoStackView.topAnchor.constraint(equalTo: self.topAnchor, constant: 27)
+        let leadingConstraint = self.infoStackView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16)
+        let trailingConstraint = self.infoStackView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16)
         
         let imageViewAspectRatio = self.imageView.heightAnchor.constraint(equalTo: self.imageView.widthAnchor, multiplier: 1.0)
         
-        self.buttonTopConstraint = self.statusButton.topAnchor.constraint(equalTo: self.infoStackView.bottomAnchor, constant: 20)
+        self.buttonTopConstraint = self.statusButton.topAnchor.constraint(equalTo: self.infoStackView.bottomAnchor, constant: 16)
         let leadingButtonConstraint = self.statusButton.leadingAnchor.constraint(equalTo: self.infoStackView.leadingAnchor)
         let trailingButtonConstraint = self.statusButton.trailingAnchor.constraint(equalTo: self.infoStackView.trailingAnchor)
         let bottomButtonConstraint = self.statusButton.bottomAnchor.constraint(equalTo: self.bottomAnchor)
         let heightButtonConstraint = self.statusButton.heightAnchor.constraint(equalToConstant: 50)
-        
-        
-        let topConstraintTextField = self.textField.topAnchor.constraint(equalTo: self.infoStackView.bottomAnchor, constant: 20)
-        let leadingConstraintTextField = self.textField.leadingAnchor.constraint(equalTo: self.statusLabel.leadingAnchor)
-        let trailingConstraintTextField = self.textField.trailingAnchor.constraint(equalTo: self.infoStackView.trailingAnchor)
-        let heightTextFieldConstraintTextField = self.textField.heightAnchor.constraint(equalToConstant: 18)
         
         
         
@@ -129,10 +124,6 @@ class ProfileHeaderView: UIView {
             trailingButtonConstraint,
             bottomButtonConstraint,
             heightButtonConstraint,
-            topConstraintTextField,
-            leadingConstraintTextField,
-            trailingConstraintTextField,
-            heightTextFieldConstraintTextField,
         ].compactMap({ $0 }))
         
     }
@@ -140,39 +131,13 @@ class ProfileHeaderView: UIView {
     
     
     @objc private func didTapStatusButton() {
-        
-        if self.textField.isHidden {
-            self.addSubview(self.textField)
-            
-            self.buttonTopConstraint?.isActive = false
-            self.buttonTopConstraint = self.statusButton.topAnchor.constraint(equalTo: self.textField.bottomAnchor, constant: 20)
-            self.statusButton.setTitle("Confirm status", for: .normal)
-            NSLayoutConstraint.activate([
-                
-                self.buttonTopConstraint
-            ].compactMap({ $0 }))
-        } else {
-            self.buttonTopConstraint?.isActive = false
-            self.buttonTopConstraint = self.statusButton.topAnchor.constraint(equalTo: self.infoStackView.bottomAnchor, constant: 16)
-            self.statusButton.setTitle("Set status", for: .normal)
             if textField.text != "" {
                 self.statusLabel.text = self.textField.text
             }
             self.textField.text = nil
-            
-            
-            
-            NSLayoutConstraint.activate([
-                buttonTopConstraint
-            ].compactMap({ $0 }))
         }
-        
-        self.delegate?.didTapStatusButton(textFieldIsVisible: self.textField.isHidden) { [weak self] in
-            self?.textField.isHidden.toggle()
-        }
-    }
+    
 }
-
 
 extension UIImage {
     func showPictureFullScreen (image: String) {

@@ -35,7 +35,7 @@ final class PhotoTableViewCell: UITableViewCell {
         return collectionView
     }()
     
-    var numberOfPictures: Int = 4
+    var numberOfPictures: Int = 3
     
     private func setupView() {
        
