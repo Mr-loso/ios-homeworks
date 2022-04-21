@@ -224,7 +224,7 @@ class LoginViewController: UIViewController {
 
             default:
                 self.messageLabel.isHidden = false
-                self.messageLabel.text = "wrong login"
+                self.messageLabel.text = "wrong login or password"
 
                 UIView.animate(withDuration: 0.5) {
                     self.view.layoutIfNeeded()
@@ -292,7 +292,6 @@ class LoginViewController: UIViewController {
         
         view.endEditing(true)
     
-        show(ProfileViewController(), sender: nil)
     }
     
     @objc private func kbdShow(notification: NSNotification) {
