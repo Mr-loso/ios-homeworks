@@ -49,6 +49,8 @@ class ProfileHeaderView: UIView {
         let textField = UITextField()
         textField.placeholder = "Set status"
         textField.translatesAutoresizingMaskIntoConstraints = false
+        textField.layer.borderWidth = 2
+        textField.layer.borderColor = UIColor.lightGray.cgColor
         textField.text = nil
         textField.backgroundColor = .systemGray4
         textField.layer.cornerRadius = 8
@@ -133,14 +135,25 @@ class ProfileHeaderView: UIView {
     @objc private func didTapStatusButton() {
             if textField.text != "" {
                 self.statusLabel.text = self.textField.text
+            } else {
+                UIView.animate(withDuration: 0.5) {
+                                    self.layoutIfNeeded()
+                                    self.textField.layer.borderColor = UIColor.red.cgColor
+                
+                                } completion: { _ in
+                            }
+                                self.endEditing(true)
+                
+                                UIView.animate(withDuration: 0.5, delay: 1) {
+                                    self.layoutIfNeeded()
+                                    self.textField.layer.borderColor = UIColor.lightGray.cgColor
+                
+                
+                                } completion: { _ in
+                            }
             }
             self.textField.text = nil
         }
     
 }
 
-extension UIImage {
-    func showPictureFullScreen (image: String) {
-        
-    }
-}

@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ProfileViewController: UIViewController {
+class ProfileViewController: UIViewController, TapLikedDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -15,10 +15,17 @@ class ProfileViewController: UIViewController {
         self.setupView()
         self.setupGesture()
         self.setupNavigationBar()
-        self.fetchArticles { [weak self] articles in
-            self?.dataSource = articles
-            self?.tableView.reloadData()
-        }
+        self.addDataSource()
+        self.tableView.reloadData()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        tableView.reloadData()
+    }
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        tableView.reloadData()
     }
     
     private lazy var closeButton: UIButton = {
@@ -40,6 +47,13 @@ class ProfileViewController: UIViewController {
         
         return view
     } ()
+    
+    var liked: Bool = false
+    
+    func tapLikedButton() {
+        liked.toggle()
+        self.tableView.reloadData()
+    }
     
     private var centerX: NSLayoutConstraint?
     private var centerY: NSLayoutConstraint?
@@ -134,8 +148,22 @@ class ProfileViewController: UIViewController {
         return JSONDecoder()
     }()
     
-    private var dataSource: [News.Article] = []
+    //private var dataSource: [Posts] = []
 
+    private func addDataSource() {
+        dataSource.append(.init(author: "ИА 'Панорама'", description: "11 юристов из Королевства Саудовская Аравия войдут в специальную комиссию по разработке поправок к Конституции России, сообщает официальный сайт Кремля.", pic: "News0", id: "001", title: "Саудовские специалисты войдут в комиссию по разработке поправок в Конституцию РФ", publishedAt: "2022-03-14T18:00:00Z", likes: 50, views: 120))
+        dataSource.append(.init(author: "Займись собой", description: "8 марта американский математик русского происхождения Генди Аджимов созвал консилиум математического общества США с предложением переименовать ось аппликат (или ось “Z”) в ось “И” краткое.", pic: "News1", id: "002", title: "Американская ассоциация математиков думает над переименованием оси Z ", publishedAt: "2022-03-14T18:00:00Z", likes: 50, views: 120))
+        dataSource.append(.init(author: "ИА 'Панорама'", description: "В Москве с 15 марта начнут выписывать штрафы за ношение масок в публичных местах. Согласно указу мэра Сергея Собянина, масочный режим отменяется, равно как и ряд антиковидных мер для бизнеса.", pic: "News2", id: "003", title: "В Москве с завтрашнего дня будут штрафовать за ношение масок", publishedAt: "2022-03-14T18:00:00Z", likes: 10, views: 15))
+        dataSource.append(.init(author: "ИА 'Панорама'", description: "Руководство Нижнетагильского металлургического комбината ждёт запросов от российских IT-компаний на поставку железа. Иностранные производители железа прекратили деятельность в России, освободив рынок.", pic: "News3", id: "005", title: "Нижнетагильский металлургический комбинат готов поставлять российским IT-компаниям железо для серверов", publishedAt: "2022-03-14T18:00:00Z", likes: 30, views: 40))
+    }
+    
+//    struct Posts: Equatable {
+//        let author, description, pic, id, title, publishedAt: String
+//        var likes, views: Int
+//    }
+//
+//    var dataSource: [Posts] = []
+    
     
     private func setupNavigationBar() {
         self.navigationItem.title = "Profile"
@@ -147,6 +175,8 @@ class ProfileViewController: UIViewController {
         self.navigationController?.navigationBar.standardAppearance = navBarAppearance
         self.navigationController?.navigationBar.scrollEdgeAppearance = navBarAppearance
     }
+    
+    
 
     private func setupView() {
         
@@ -154,8 +184,7 @@ class ProfileViewController: UIViewController {
         self.view.addSubview(self.tableView)
         self.shadowView.addSubview(closeButton)
         self.tableView.addSubview(self.imageView)
-        
-        
+    
         
         let topTableConstraint = self.tableView.topAnchor.constraint(equalTo: self.view.topAnchor)
         let leadingTableConstraint = self.tableView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor)
@@ -177,7 +206,6 @@ class ProfileViewController: UIViewController {
         
         self.imageWidth = self.imageView.widthAnchor.constraint(equalToConstant: 106)
         
-        //
     
         let imageViewAspectRatio = self.imageView.heightAnchor.constraint(equalTo: self.imageView.widthAnchor, multiplier: 1.0)
 
@@ -202,28 +230,28 @@ class ProfileViewController: UIViewController {
         ].compactMap({ $0 }))
     }
 
-    private func fetchArticles(completion: @escaping ([News.Article]) -> Void) {
-        if let path = Bundle.main.path(forResource: "news", ofType: "json") {
-            do {
-                let data = try Data(contentsOf: URL(fileURLWithPath: path), options: .alwaysMapped)
-
-                let news = try self.jsonDecoder.decode(News.self, from: data)
-                print("json data: \(news)")
-                completion(news.articles)
-            } catch let error {
-                print("parse error: \(error.localizedDescription)")
-            }
-        } else {
-            fatalError("Invalid filename/path.")
-        }
-    }
+//    private func fetchArticles(completion: @escaping ([News.Article]) -> Void) {
+//        if let path = Bundle.main.path(forResource: "news", ofType: "json") {
+//            do {
+//                let data = try Data(contentsOf: URL(fileURLWithPath: path), options: .alwaysMapped)
+//
+//                let news = try self.jsonDecoder.decode(News.self, from: data)
+//                print("json data: \(news)")
+//                completion(news.articles)
+//            } catch let error {
+//                print("parse error: \(error.localizedDescription)")
+//            }
+//        } else {
+//            fatalError("Invalid filename/path.")
+//        }
+//    }
     
 }
 
 extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return (self.dataSource.count+3)
+        return dataSource.count+3
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -270,8 +298,15 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "DefaultCell", for: indexPath)
                 return cell
             }
-            let article = self.dataSource[indexPath.row-3]
-            let viewModel = DynamicArticleTableViewCell.ViewModel(title: article.title, description: article.description, publishedAt: article.publishedAtString, likes: article.likes, views: article.views, newsImage: UIImage(named: article.pic))
+            cell.likedDelegate = self
+            if liked {
+                dataSource[indexPath.row-3].likes += 1
+                liked.toggle()
+            }
+            
+            
+            let article = dataSource[indexPath.row - 3]
+            let viewModel = DynamicArticleTableViewCell.ViewModel(title: article.title, description: article.description, publishedAt: article.publishedAt, likes: article.likes, views: article.views, newsImage: UIImage(named: article.pic), ID: article.id)
             cell.setup(with: viewModel)
             return cell
         }
@@ -287,15 +322,15 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
         self.navigationController?.pushViewController(PhotosViewController(), animated: true)
         
         default:
-
-            
             let viewController = ExpandedArticleView()
             viewController.selectedDataImage = dataSource[indexPath.row - 3].pic
             viewController.selectedDataLikes = dataSource[indexPath.row - 3].likes
-        
+            viewController.selectedDataViews = dataSource[indexPath.row - 3].views + 1
+            dataSource[indexPath.row - 3].views += 1
             viewController.selectedTitle = dataSource[indexPath.row - 3].title
             viewController.selectedDataDescription = dataSource[indexPath.row - 3].description
             self.tableView.reloadRows(at: [indexPath], with: .none)
+            viewController.selectedDataID = dataSource [indexPath.row - 3].id
             navigationController?.pushViewController(viewController, animated: true)
         }
     }
@@ -315,6 +350,4 @@ extension ProfileViewController {
         self.view.endEditing(true)
         
     }
-    
-    
 }

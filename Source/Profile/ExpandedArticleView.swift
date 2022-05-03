@@ -10,16 +10,21 @@ import UIKit
 
 class ExpandedArticleView: UIViewController {
     
+    
     override func viewDidLoad() {
-        self.navigationItem.title = "Article"
         super.viewDidLoad()
+     //   self.transitioningDelegate = self
+        self.navigationItem.title = "Article"
         self.setupView()
     }
     
-    var selectedDataLikes, selectedTitle, selectedDataDescription, selectedDataImage: String?
-    var  selectedDataViews: Int?
+
     
-    var likesCount = 0
+    var selectedTitle, selectedDataDescription, selectedDataImage, selectedDataID: String?
+    var selectedDataLikes, selectedDataViews : Int?
+
+    
+    
     
     private lazy var NewsImage: UIImageView = {
         let im = UIImageView()
@@ -56,11 +61,7 @@ class ExpandedArticleView: UIViewController {
         label.backgroundColor = .clear
         label.numberOfLines = 0
         label.font = UIFont(name: "Helvetica-Bold", size: 20)
-        
-        if let text = selectedTitle {
-            label.text = text
-        }
-        
+        label.text = String(selectedTitle!)
         label.setContentCompressionResistancePriority(UILayoutPriority(250), for: .vertical)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -95,7 +96,7 @@ class ExpandedArticleView: UIViewController {
         let label = UIButton()
         label.backgroundColor = .systemBlue
         label.alpha = 0.6
-        label.setTitle("views: 1", for: .normal)
+        label.setTitle("views: " + String(selectedDataViews!), for: .normal)
         label.layer.cornerRadius = 11
         label.clipsToBounds = true
 
@@ -107,8 +108,8 @@ class ExpandedArticleView: UIViewController {
         let button = UIButton()
         button.backgroundColor = .red
         button.alpha = 0.6
-        button.addTarget(self, action: #selector(self.didTapLikeButton), for: .touchUpInside)
-        button.setTitle("likes: 0", for: .normal)
+        button.addTarget(self, action: #selector(didTapLikeButton), for: .touchUpInside)
+        button.setTitle("likes: " + String (selectedDataLikes!), for: .normal)
         button.layer.cornerRadius = 11
         button.clipsToBounds = true
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -166,9 +167,13 @@ class ExpandedArticleView: UIViewController {
     
     @objc private func didTapLikeButton() {
         
-        print("TAP")
-        likesCount += 1
-        self.likesButton.setTitle(String("likes: " + String (likesCount)), for: .normal)
+        for i in 0...dataSource.count-3 {
+            if dataSource[i].id == selectedDataID {
+                dataSource[i].likes += 1
+                likesButton.setTitle("Likes: " + String(dataSource[i].likes), for: .normal)
+                likesButton.layoutIfNeeded()
+            }
+        }
     }
 }
 

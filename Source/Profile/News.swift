@@ -17,7 +17,7 @@ struct News: Decodable {
     }()
     
     struct Article: Decodable {
-        let author, title, description, publishedAt, likes, views, pic: String
+        let author, title, description, publishedAt, likes, views, pic, id: String
     
 
         var publishedAtString: String {
@@ -25,7 +25,7 @@ struct News: Decodable {
         }
 
         enum CodingKeys: String, CodingKey {
-            case author, title, description, publishedAt, likes, views, pic
+            case author, title, description, publishedAt, likes, views, pic, id
         }
     }
 

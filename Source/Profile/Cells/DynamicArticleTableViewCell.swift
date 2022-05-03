@@ -9,16 +9,20 @@ import UIKit
 
 final class DynamicArticleTableViewCell: UITableViewCell {
     
+    var likedDelegate: TapLikedDelegate?
+    
     struct ViewModel: ViewModelProtocol {
         let title: String
         let description: String
         let publishedAt: String
-        let likes: String
-        let views: String
+        let likes: Int
+        let views: Int
         let newsImage: UIImage?
+        let ID: String
     }
     
     var likesCount = 0
+    var selectedDataID = " "
     
     private lazy var NewsImage: UIImageView = {
         let image = UIImageView()
@@ -94,7 +98,7 @@ final class DynamicArticleTableViewCell: UITableViewCell {
         let button = UIButton()
         button.backgroundColor = .red
         button.alpha = 0.6
-        button.addTarget(self, action: #selector(self.didTapLikeButton), for: .touchUpInside)
+        button.addTarget(self, action: #selector(self.tapLiked), for: .touchUpInside)
         button.setTitle("likes: 0", for: .normal)
         button.layer.cornerRadius = 11
         button.clipsToBounds = true
@@ -156,10 +160,21 @@ final class DynamicArticleTableViewCell: UITableViewCell {
     }
     
     
-    @objc private func didTapLikeButton() {
-        likesCount += 1
-        self.likesButton.setTitle(String("likes: " + String (likesCount)), for: .normal)
+//    @objc private func didTapLikeButton() {
+//        
+//        for i in 0...dataSource.count {
+//            if dataSource[i].id == selectedDataID {
+//                dataSource[i+1].likes += 1
+//                likesButton.setTitle("Likes: " + String(dataSource[i].likes), for: .normal)
+//             
+//            }
+//        }
+//    }
+    @objc func tapLiked() {
+        likedDelegate?.tapLikedButton()
     }
+    
+    
 }
 
 
@@ -172,6 +187,18 @@ extension DynamicArticleTableViewCell: Setupable {
         self.descriptionLabel.text = viewModel.description
         self.dateTitle.text = viewModel.publishedAt
         self.NewsImage.image = viewModel.newsImage
+        self.likesButton.setTitle("likes: " + String(viewModel.likes), for: .normal)
+        self.viewsLabel.setTitle("views: " + String(viewModel.views), for: .normal)
+        likesCount = viewModel.likes
+        self.selectedDataID = viewModel.ID
     }
+    
 }
+
+    
+protocol TapLikedDelegate: AnyObject {
+    func tapLikedButton()
+}
+
+ 
 
